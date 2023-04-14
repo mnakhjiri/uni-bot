@@ -73,7 +73,7 @@ class BlackListWord(BaseModel):
     @classmethod
     def remove_all_black_list(cls, chat_id):
         user = User.get(chat_id=chat_id)
-        BlackListWord.delete().where(user=user)
+        BlackListWord.delete().where(BlackListWord.user == user).execute()
 
 
 def create_tables():
