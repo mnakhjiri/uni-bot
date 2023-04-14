@@ -155,7 +155,10 @@ def show_blacklist(message):
     out = ""
     for word in words:
         out += f"{word}\n"
-    bot.send_message(message.chat.id, out)
+    if out == "":
+        bot.send_message(message.chat.id, "شما عبارتی در لیست پنهان ندارید.")
+    else:
+        bot.send_message(message.chat.id, out)
 
 
 @bot.message_handler(commands=['reset_hidden_words'])
