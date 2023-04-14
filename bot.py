@@ -77,4 +77,10 @@ def send_alert(message):
             bot.send_message(user.chat_id, alert_str)
 
 
+@bot.message_handler(commands=['id'])
+@save_user_to_db
+def get_id(message):
+    bot.send_message(message.chat.id, str(message.chat.id))
+
+
 bot.infinity_polling()
