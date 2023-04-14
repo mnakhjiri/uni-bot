@@ -122,8 +122,8 @@ def send_feedback(message):
 
 @bot.message_handler(commands=['dont_show'])
 @save_user_to_db
-def send_feedback(message):
-    black_word = message.text.replace("/dont_show", "")
+def dont_show_word(message):
+    black_word = message.text.replace("/dont_show", "").strip()
     if black_word == "":
         bot.send_message(message.chat.id, "لظفا پیام خودت به صورت فرمت زیر بفرستید:")
         bot.send_message(message.chat.id, f"/dont_show \nمحتوای پیام")
@@ -133,8 +133,8 @@ def send_feedback(message):
 
 @bot.message_handler(commands=['show'])
 @save_user_to_db
-def send_feedback(message):
-    black_word = message.text.replace("/show", "")
+def show_word(message):
+    black_word = message.text.replace("/show", "").strip()
     if black_word == "":
         bot.send_message(message.chat.id, "لظفا پیام خودت به صورت فرمت زیر بفرستید:")
         bot.send_message(message.chat.id, f"/show \nمحتوای پیام")
