@@ -32,6 +32,8 @@ def get_csv(message, url):
     p = pd.read_csv(url)
     i = 1
     try:
+        black_list_words = BlackListWord.get_black_list_words(message.chat.id)
+        print(black_list_words)
         while True:
             if not isinstance(p.iloc[i, 0], str):
                 continue
@@ -40,11 +42,10 @@ def get_csv(message, url):
                 out = p.iloc[i, j]
                 if isinstance(out, str):
                     row += out + " "
-            black_list_words = BlackListWord.get_black_list_words(message.chat.id)
-            for word in black_list_words:
-                if word in row:
-                    i += 1
-                    continue
+            # for word in black_list_words:
+            #     if word in row:
+            #         i += 1
+            #         continue
             result += f"{row}\n\n"
             i += 1
     except IndexError:
