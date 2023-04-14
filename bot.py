@@ -57,22 +57,24 @@ def greet(message):
 @bot.message_handler(commands=['homeworks'])
 @save_user_to_db
 def homework(message):
-    print("homeworks")
     threading.Thread(target=get_csv, args=(message, hw_url)).start()
 
 
 @bot.message_handler(commands=['exams'])
 @save_user_to_db
 def exams(message):
-    print("exams")
     threading.Thread(target=get_csv, args=(message, exam_url)).start()
 
 
-@bot.message_handler(commands=['test'])
-def test(message):
-    users = User.get_users()
-    for user in users:
-        print(user.name, user.chat_id)
+@bot.message_handler(commands=['send_alert'])
+@save_user_to_db
+def send_alert(message):
+    alert_str = message.text.replace("/send_alert", "")
+    admins = config['bot']['ADMIN_IDS'].split(",")
+    if message.chat.id in admins:
+        users = User.get_users()
+        for user in users:
+            bot.send_message(user.chat_id, alert_str)
 
 
 bot.infinity_polling()
