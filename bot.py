@@ -82,7 +82,14 @@ def send_alert(message):
     if str(message.chat.id) in admins:
         users = User.get_users()
         for user in users:
-            bot.send_message(user.chat_id, alert_str)
+            words = BlackListWord.get_black_list_words(message.chat.id)
+            can_send = True
+            for word in words:
+                if word in alert_str:
+                    can_send = False
+                    break
+            if can_send:
+                bot.send_message(user.chat_id, alert_str)
 
 
 @bot.message_handler(commands=['id'])
