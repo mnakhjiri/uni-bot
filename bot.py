@@ -108,4 +108,10 @@ def send_feedback(message):
     bot.forward_message(admins[0], message.chat.id, message.id)
 
 
+@bot.message_handler(commands=['sheet'])
+@save_user_to_db
+def send_feedback(message):
+    bot.send_message(message.chat.id, f"https://docs.google.com/spreadsheets/d/{sheet_id}")
+
+
 bot.infinity_polling()
