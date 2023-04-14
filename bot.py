@@ -26,6 +26,15 @@ def save_user_to_db(func):
     return wrapper_func
 
 
+def admin(func):
+    def wrapper_func(message):
+        admins = config['bot']['ADMIN_IDS'].split(",")
+        if str(message.chat.id) in admins:
+            func(message)
+
+    return wrapper_func
+
+
 # base bot
 def get_csv(message, url):
     result = ""
@@ -171,6 +180,16 @@ def show_blacklist(message):
 def reset_blacklist(message):
     BlackListWord.remove_all_black_list(message.chat.id)
     bot.send_message(message.chat.id, "تمامی عبارات از لیست پنهان حذف شدند.")
+
+
+@bot.message_handler(commands=['status'])
+@save_user_to_db
+@admin
+def status(message):
+    number_of_users = User.select().count()
+    number_of_blacklist_words = BlackListWord.select().group_by(BlackListWord.text).count()
+    bot.send_message(
+        f"number_of_users : {number_of_users} \n\n number_of_blacklist_words : {number_of_blacklist_words}")
 
 
 bot.infinity_polling()
