@@ -30,6 +30,11 @@ class User(BaseModel):
         )
 
     @classmethod
+    def get_users(cls):
+        query = User.select().execute()
+        return list(query)
+
+    @classmethod
     def have_user(cls, chat_id):
         query = cls.select().where((cls.chat_id == chat_id))
         return len(query) != 0

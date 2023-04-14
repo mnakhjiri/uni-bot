@@ -68,4 +68,9 @@ def exams(message):
     threading.Thread(target=get_csv, args=(message, exam_url)).start()
 
 
+@bot.message_handler(commands=['test'])
+def test(message):
+    print(User.get_users())
+
+
 bot.infinity_polling()
