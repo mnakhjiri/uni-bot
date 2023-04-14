@@ -18,7 +18,6 @@ hw_url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv&g
 
 def save_user_to_db(func):
     def wrapper_func(message):
-        print("hi")
         if message.chat.last_name is None:
             message.chat.last_name = ""
         User.add_user(message.chat.first_name, message.chat.last_name, message.chat.id)
@@ -56,14 +55,14 @@ def greet(message):
 
 
 @bot.message_handler(commands=['homeworks'])
-# @save_user_to_db
+@save_user_to_db
 def homework(message):
     print("homeworks")
     threading.Thread(target=get_csv, args=(message, hw_url)).start()
 
 
 @bot.message_handler(commands=['exams'])
-# @save_user_to_db
+@save_user_to_db
 def exams(message):
     print("exams")
     threading.Thread(target=get_csv, args=(message, exam_url)).start()
