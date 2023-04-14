@@ -85,20 +85,19 @@ def exams(message):
 
 @bot.message_handler(commands=['send_alert'])
 @save_user_to_db
+@admin
 def send_alert(message):
     alert_str = message.text.replace("/send_alert", "")
-    admins = config['bot']['ADMIN_IDS'].split(",")
-    if str(message.chat.id) in admins:
-        users = User.get_users()
-        for user in users:
-            words = BlackListWord.get_black_list_words(message.chat.id)
-            can_send = True
-            for word in words:
-                if word in alert_str:
-                    can_send = False
-                    break
-            if can_send:
-                bot.send_message(user.chat_id, alert_str)
+    users = User.get_users()
+    for user in users:
+        words = BlackListWord.get_black_list_words(message.chat.id)
+        can_send = True
+        for word in words:
+            if word in alert_str:
+                can_send = False
+                break
+        if can_send:
+            bot.send_message(user.chat_id, alert_str)
 
 
 @bot.message_handler(commands=['id'])
@@ -109,15 +108,14 @@ def get_id(message):
 
 @bot.message_handler(commands=['users'])
 @save_user_to_db
+@admin
 def get_users(message):
-    admins = config['bot']['ADMIN_IDS'].split(",")
-    if str(message.chat.id) in admins:
-        users = User.get_users()
-        result = ""
-        for user in users:
-            result += f"{user.name} {user.last_name} : {user.chat_id}\n"
+    users = User.get_users()
+    result = ""
+    for user in users:
+        result += f"{user.name} {user.last_name} : {user.chat_id}\n"
 
-        bot.send_message(message.chat.id, result)
+    bot.send_message(message.chat.id, result)
 
 
 @bot.message_handler(commands=['feedback'])
@@ -134,7 +132,7 @@ def send_feedback(message):
 
 @bot.message_handler(commands=['sheet'])
 @save_user_to_db
-def send_feedback(message):
+def send_sheet(message):
     bot.send_message(message.chat.id, f"https://docs.google.com/spreadsheets/d/{sheet_id}")
 
 
