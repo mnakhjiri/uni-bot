@@ -143,4 +143,14 @@ def show_word(message):
     BlackListWord.remove_from_black_list(black_word, message.chat.id)
 
 
+@bot.message_handler(commands=['hidden_words'])
+@save_user_to_db
+def show_blacklist(message):
+    words = BlackListWord.get_black_list_words(message.chat.id)
+    out = ""
+    for word in words:
+        out += f"{word}\n"
+    bot.send_message(message.chat.id, out)
+
+
 bot.infinity_polling()
