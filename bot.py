@@ -35,11 +35,17 @@ def get_csv(message, url):
         while True:
             if not isinstance(p.iloc[i, 0], str):
                 continue
+            row = ""
             for j in range(3):
                 out = p.iloc[i, j]
                 if isinstance(out, str):
-                    result += out + " "
-            result += "\n\n"
+                    row += out + " "
+            black_list_words = BlackListWord.get_black_list_words(message.chat.id)
+            for word in black_list_words:
+                if word in row:
+                    i += 1
+                    continue
+            result += f"{row}\n\n"
             i += 1
     except IndexError:
         pass
