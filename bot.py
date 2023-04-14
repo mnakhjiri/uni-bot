@@ -41,6 +41,8 @@ def get_csv(message, url):
                     result += out + " "
             result += "\n\n"
             i += 1
+    except IndexError:
+        pass
     except Exception as e:
         print(str(e))
     bot.send_message(message.chat.id, result)
