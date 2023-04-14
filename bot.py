@@ -42,10 +42,10 @@ def get_csv(message, url):
                 out = p.iloc[i, j]
                 if isinstance(out, str):
                     row += out + " "
-            # for word in black_list_words:
-            #     if word in row:
-            #         i += 1
-            #         continue
+            for word in black_list_words:
+                if word in row:
+                    i += 1
+                    continue
             result += f"{row}\n\n"
             i += 1
     except IndexError:
