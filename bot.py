@@ -45,7 +45,7 @@ def get_csv(message, url):
             for word in black_list_words:
                 print(word)
                 print(row)
-                if row.find(word) > 0:
+                if word in row:
                     i += 1
                     continue
             result += f"{row}\n\n"
