@@ -1,7 +1,6 @@
 from peewee import *
 from datetime import datetime
 
-# peewee.Context conflicts with the context.Context
 
 database = SqliteDatabase("db.sqlite3")
 
