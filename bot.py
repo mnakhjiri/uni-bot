@@ -13,10 +13,6 @@ exam_url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv
 hw_url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv&gid=0"
 
 
-# p = pd.read_csv(url)
-# print(p.iloc[0, 2])
-
-
 def get_csv(message, url):
     result = ""
     p = pd.read_csv(url)
