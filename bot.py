@@ -43,6 +43,8 @@ def get_csv(message, url):
                 if isinstance(out, str):
                     row += out + " "
             for word in black_list_words:
+                print(word)
+                print(row)
                 if word in row:
                     i += 1
                     continue
