@@ -72,6 +72,7 @@ def send_alert(message):
     alert_str = message.text.replace("/send_alert", "")
     print(alert_str)
     admins = config['bot']['ADMIN_IDS'].split(",")
+    print(admins)
     if message.chat.id in admins:
         print("sending...")
         users = User.get_users()
