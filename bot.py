@@ -34,7 +34,7 @@ def get_csv(message, url):
     try:
         while True:
             if not isinstance(p.iloc[i, 0], str):
-                break
+                continue
             for j in range(3):
                 out = p.iloc[i, j]
                 if isinstance(out, str):
