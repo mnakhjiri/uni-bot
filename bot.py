@@ -193,7 +193,7 @@ def status(message):
     result += f"number_of_users : {number_of_users}\n\n"
     result += f"number_of_blacklist_words : {number_of_blacklist_words}\n\n"
     result += f"number_of_users_using_blacklist_words : {number_of_users_using_blacklist_words}"
-    bot.send_message(message.chat.id, message)
+    bot.send_message(message.chat.id, result)
 
 
 bot.infinity_polling()
