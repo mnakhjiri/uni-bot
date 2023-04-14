@@ -45,7 +45,7 @@ def get_csv(message, url):
             for word in black_list_words:
                 print(word)
                 print(row)
-                if row.find(word) < 0:
+                if row.find(word) > 0:
                     i += 1
                     continue
             result += f"{row}\n\n"
@@ -133,7 +133,6 @@ def dont_show_word(message):
         return
     BlackListWord.add_to_black_list(black_word, message.chat.id)
     bot.send_message(message.chat.id, "عبارت مورد نظر از این به بعد نمایش داده نمی شود.")
-
 
 
 @bot.message_handler(commands=['show'])
