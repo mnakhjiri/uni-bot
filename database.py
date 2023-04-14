@@ -70,6 +70,11 @@ class BlackListWord(BaseModel):
             record = cls.get(user=user, text=word)
             BlackListWord.delete_instance(record)
 
+    @classmethod
+    def remove_all_black_list(cls, chat_id):
+        user = User.get(chat_id=chat_id)
+        BlackListWord.delete().where(user=user)
+
 
 def create_tables():
     with database:

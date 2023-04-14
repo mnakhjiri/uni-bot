@@ -132,6 +132,8 @@ def dont_show_word(message):
         bot.send_message(message.chat.id, f"/dont_show \nمحتوای پیام")
         return
     BlackListWord.add_to_black_list(black_word, message.chat.id)
+    bot.send_message(message.chat.id, "عبارت مورد نظر از این به بعد نمایش داده نمی شود.")
+
 
 
 @bot.message_handler(commands=['show'])
@@ -143,6 +145,7 @@ def show_word(message):
         bot.send_message(message.chat.id, f"/show \nمحتوای پیام")
         return
     BlackListWord.remove_from_black_list(black_word, message.chat.id)
+    bot.send_message(message.chat.id, "عبارت مورد نظر از این به بعد نمایش داده می شود.")
 
 
 @bot.message_handler(commands=['hidden_words'])
@@ -153,6 +156,13 @@ def show_blacklist(message):
     for word in words:
         out += f"{word}\n"
     bot.send_message(message.chat.id, out)
+
+
+@bot.message_handler(commands=['reset_hidden_words'])
+@save_user_to_db
+def reset_blacklist(message):
+    BlackListWord.remove_all_black_list(message.chat.id)
+    bot.send_message(message.chat.id, "تمامی عبارات از لیست پنهان حذف شدند.")
 
 
 bot.infinity_polling()
