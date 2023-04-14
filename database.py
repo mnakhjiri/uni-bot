@@ -73,7 +73,7 @@ class BlackListWord(BaseModel):
 
 def create_tables():
     with database:
-        database.create_tables([User])
+        database.create_tables([User, BlackListWord])
 
 
 create_tables()
