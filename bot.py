@@ -30,7 +30,7 @@ def save_user_to_db(func):
 def get_csv(message, url):
     result = ""
     p = pd.read_csv(url)
-    i = 2
+    i = 1
     try:
         while True:
             if not isinstance(p.iloc[i, 0], str):
