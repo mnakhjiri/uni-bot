@@ -105,7 +105,7 @@ def send_feedback(message):
         bot.send_message(message.chat.id, f"/feedback \nمحتوای پیام")
         return
     admins = config['bot']['ADMIN_IDS'].split(",")
-    bot.send_message(admins[0], feedback_str)
+    bot.forward_message(admins[0], message.chat.id, message.id)
 
 
 bot.infinity_polling()
