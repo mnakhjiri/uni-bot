@@ -87,7 +87,6 @@ def get_id(message):
 @bot.message_handler(commands=['users'])
 @save_user_to_db
 def get_users(message):
-    bot.send_message(message.chat.id, str(message.chat.id))
     admins = config['bot']['ADMIN_IDS'].split(",")
     if str(message.chat.id) in admins:
         users = User.get_users()
