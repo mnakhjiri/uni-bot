@@ -188,8 +188,8 @@ def reset_blacklist(message):
 def status(message):
     number_of_users = User.select().count()
     number_of_blacklist_words = BlackListWord.select().group_by(BlackListWord.text).count()
-    bot.send_message(
-        f"number_of_users : {number_of_users} \n\n number_of_blacklist_words : {number_of_blacklist_words}")
+    bot.send_message(message.chat.id,
+                     f"number_of_users : {number_of_users} \n\n number_of_blacklist_words : {number_of_blacklist_words}")
 
 
 bot.infinity_polling()
