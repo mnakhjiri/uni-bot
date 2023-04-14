@@ -18,9 +18,9 @@ hw_url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv&g
 
 def save_user_to_db(func):
     def wrapper_func(message):
+        print("hi")
         if message.chat.last_name is None:
             message.chat.last_name = ""
-
         User.add_user(message.chat.first_name, message.chat.last_name, message.chat.id)
 
     return wrapper_func
@@ -49,7 +49,7 @@ def get_csv(message, url):
 
 
 @bot.message_handler(commands=['start'])
-# @save_user_to_db
+@save_user_to_db
 def greet(message):
     bot.send_message(message.chat.id, f"سلام، از این بات می توانید آخرین وضعیت تکالیف و امتحانات را مشاهده نمایید.")
 
