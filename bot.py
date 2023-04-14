@@ -141,7 +141,7 @@ def dont_show_word(message):
 def show_word(message):
     black_word = message.text.replace("/show", "").strip()
     if black_word == "":
-        bot.send_message(message.chat.id, "لظفا پیام خودت به صورت فرمت زیر بفرستید:")
+        bot.send_message(message.chat.id, "لطفا پیام خودت به صورت فرمت زیر بفرستید:")
         bot.send_message(message.chat.id, f"/show \nمحتوای پیام")
         return
     BlackListWord.remove_from_black_list(black_word, message.chat.id)
