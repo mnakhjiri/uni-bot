@@ -70,7 +70,9 @@ def exams(message):
 
 @bot.message_handler(commands=['test'])
 def test(message):
-    print(User.get_users())
+    users = User.get_users()
+    for user in users:
+        print(user.name, user.chat_id)
 
 
 bot.infinity_polling()
