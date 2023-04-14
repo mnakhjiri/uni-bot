@@ -74,7 +74,6 @@ def send_alert(message):
     if str(message.chat.id) in admins:
         users = User.get_users()
         for user in users:
-            print(user.chat_id)
             bot.send_message(user.chat_id, alert_str)
 
 
