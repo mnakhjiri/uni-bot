@@ -33,7 +33,6 @@ def get_csv(message, url):
     i = 1
     try:
         black_list_words = BlackListWord.get_black_list_words(message.chat.id)
-        print(black_list_words)
         while True:
             not_show = False
             if not isinstance(p.iloc[i, 0], str):
@@ -44,8 +43,6 @@ def get_csv(message, url):
                 if isinstance(out, str):
                     row += out + " "
             for word in black_list_words:
-                print(word)
-                print(row)
                 if word in row:
                     not_show = True
                     break
