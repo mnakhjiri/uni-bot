@@ -70,10 +70,13 @@ def exams(message):
 @save_user_to_db
 def send_alert(message):
     alert_str = message.text.replace("/send_alert", "")
+    print(alert_str)
     admins = config['bot']['ADMIN_IDS'].split(",")
     if message.chat.id in admins:
+        print("sending...")
         users = User.get_users()
         for user in users:
+            print(user.chat_id)
             bot.send_message(user.chat_id, alert_str)
 
 
