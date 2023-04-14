@@ -96,4 +96,16 @@ def get_users(message):
         bot.send_message(message.chat.id, result)
 
 
+@bot.message_handler(commands=['feedback'])
+@save_user_to_db
+def send_feedback(message):
+    feedback_str = message.text.replace("/feedback", "")
+    if feedback_str == "":
+        bot.send_message(message.chat.id, "لظفا پیام خودت به صورت فرمت زیر بفرستید:")
+        bot.send_message(message.chat.id, f"/feedback \nمحتوای پیام")
+        return
+    admins = config['bot']['ADMIN_IDS'].split(",")
+    bot.send_message(admins[0], feedback_str)
+
+
 bot.infinity_polling()
