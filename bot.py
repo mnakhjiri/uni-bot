@@ -70,11 +70,8 @@ def exams(message):
 @save_user_to_db
 def send_alert(message):
     alert_str = message.text.replace("/send_alert", "")
-    print(alert_str)
     admins = config['bot']['ADMIN_IDS'].split(",")
-    print(admins)
     if str(message.chat.id) in admins:
-        print("sending...")
         users = User.get_users()
         for user in users:
             print(user.chat_id)
@@ -85,6 +82,20 @@ def send_alert(message):
 @save_user_to_db
 def get_id(message):
     bot.send_message(message.chat.id, str(message.chat.id))
+
+
+@bot.message_handler(commands=['users'])
+@save_user_to_db
+def get_users(message):
+    bot.send_message(message.chat.id, str(message.chat.id))
+    admins = config['bot']['ADMIN_IDS'].split(",")
+    if str(message.chat.id) in admins:
+        users = User.get_users()
+        result = ""
+        for user in users:
+            result += f"{user.name} {user.last_name} : {user.chat_id}\n"
+
+        bot.send_message(message.chat_id, result)
 
 
 bot.infinity_polling()
