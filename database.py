@@ -40,6 +40,37 @@ class User(BaseModel):
         return len(query) != 0
 
 
+class BlackListWord(BaseModel):
+    user = ForeignKeyField(User)
+    text = TextField()
+
+    @classmethod
+    def get_black_list_words(cls, chat_id):
+        user = User.get(chat_id=chat_id)
+        query = cls.select().where((cls.user == user))
+        items = list(query)
+        result = []
+        for item in items:
+            result.append(item.text)
+        return list(query)
+
+    @classmethod
+    def add_to_black_list(cls, word, chat_id):
+        if word not in BlackListWord.get_black_list_words(chat_id):
+            user = User.get(chat_id=chat_id)
+            cls.create(
+                user=user,
+                text=word
+            )
+
+    @classmethod
+    def remove_from_black_list(cls, word, chat_id):
+        if word in BlackListWord.get_black_list_words(chat_id):
+            user = User.get(chat_id=chat_id)
+            record = cls.get(user=user, text=word)
+            BlackListWord.delete_instance(record)
+
+
 def create_tables():
     with database:
         database.create_tables([User])

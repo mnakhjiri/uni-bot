@@ -114,4 +114,26 @@ def send_feedback(message):
     bot.send_message(message.chat.id, f"https://docs.google.com/spreadsheets/d/{sheet_id}")
 
 
+@bot.message_handler(commands=['dont_show'])
+@save_user_to_db
+def send_feedback(message):
+    black_word = message.text.replace("/dont_show", "")
+    if black_word == "":
+        bot.send_message(message.chat.id, "لظفا پیام خودت به صورت فرمت زیر بفرستید:")
+        bot.send_message(message.chat.id, f"/dont_show \nمحتوای پیام")
+        return
+    BlackListWord.add_to_black_list(black_word, message.chat.id)
+
+
+@bot.message_handler(commands=['show'])
+@save_user_to_db
+def send_feedback(message):
+    black_word = message.text.replace("/show", "")
+    if black_word == "":
+        bot.send_message(message.chat.id, "لظفا پیام خودت به صورت فرمت زیر بفرستید:")
+        bot.send_message(message.chat.id, f"/show \nمحتوای پیام")
+        return
+    BlackListWord.remove_from_black_list(black_word, message.chat.id)
+
+
 bot.infinity_polling()
