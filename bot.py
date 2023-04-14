@@ -95,7 +95,7 @@ def get_users(message):
         for user in users:
             result += f"{user.name} {user.last_name} : {user.chat_id}\n"
 
-        bot.send_message(message.chat_id, result)
+        bot.send_message(message.chat.id, result)
 
 
 bot.infinity_polling()
