@@ -52,7 +52,7 @@ class BlackListWord(BaseModel):
         result = []
         for item in items:
             result.append(item.text)
-        return list(query)
+        return list(result)
 
     @classmethod
     def add_to_black_list(cls, word, chat_id):
