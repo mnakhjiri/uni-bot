@@ -111,6 +111,19 @@ def send_alert(message):
     send_message_to_users(alert_str, users)
 
 
+@bot.message_handler(commands=['send_alert_test'])
+@save_user_to_db
+@admin
+def send_alert_test(message):
+    alert_str = message.text.replace("/send_alert_test", "")
+    if alert_str == "":
+        bot.send_message(message.chat.id, "لظفا پیام خودت به صورت فرمت زیر بفرستید:")
+        bot.send_message(message.chat.id, f"/send_alert_test \nمحتوای پیام")
+        return
+    user = User.get(chat_id=message.chat.id)
+    send_message_to_users(alert_str, [user])
+
+
 @bot.message_handler(commands=['id'])
 @save_user_to_db
 def get_id(message):
