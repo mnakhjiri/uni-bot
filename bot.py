@@ -65,6 +65,21 @@ def get_csv(message, url):
     bot.send_message(message.chat.id, result)
 
 
+def send_message_to_users(text, users):
+    for user in users:
+        words = BlackListWord.get_black_list_words(user.chat_id)
+        can_send = True
+        for word in words:
+            if word in text:
+                can_send = False
+                break
+        if can_send:
+            try:
+                bot.send_message(user.chat_id, text)
+            except Exception as e:
+                print(str(e))
+
+
 @bot.message_handler(commands=['start'])
 @save_user_to_db
 def greet(message):
@@ -88,16 +103,12 @@ def exams(message):
 @admin
 def send_alert(message):
     alert_str = message.text.replace("/send_alert", "")
+    if alert_str == "":
+        bot.send_message(message.chat.id, "لظفا پیام خودت به صورت فرمت زیر بفرستید:")
+        bot.send_message(message.chat.id, f"/send_alert \nمحتوای پیام")
+        return
     users = User.get_users()
-    for user in users:
-        words = BlackListWord.get_black_list_words(message.chat.id)
-        can_send = True
-        for word in words:
-            if word in alert_str:
-                can_send = False
-                break
-        if can_send:
-            bot.send_message(user.chat_id, alert_str)
+    send_message_to_users(alert_str, users)
 
 
 @bot.message_handler(commands=['id'])
