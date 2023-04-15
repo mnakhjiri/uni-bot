@@ -123,7 +123,7 @@ def send_alert_test(message):
         bot.send_message(message.chat.id, "لظفا پیام خودت به صورت فرمت زیر بفرستید:")
         bot.send_message(message.chat.id, f"/send_alert_test \nمحتوای پیام")
         return
-    user = User.get(chat_id="2146270660")
+    user = User.get(chat_id=message.chat.id)
     send_message_to_users(alert_str, [user])
 
 
