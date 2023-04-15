@@ -77,7 +77,10 @@ def send_message_to_users(text, users):
             try:
                 bot.send_message(user.chat_id, text)
             except Exception as e:
-                print(str(e))
+                if "bot was blocked by the user" in str(e):
+                    User.delete_instance(user)
+                else:
+                    print(str(e))
 
 
 @bot.message_handler(commands=['start'])
