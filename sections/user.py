@@ -133,19 +133,22 @@ def cancel_session(message):
 def create_poll(message):
     bot.send_message(message.chat.id, "درس هایی که نمی خواهید در ددلاین ها برای شمانمایش داده شوند را انتخاب کنید")
     answer_options = settings.poll_answer_options
-    chunk_size = 10
-    lists = [answer_options[i:i + chunk_size] for i in range(0, len(answer_options), chunk_size)]
-    for item in lists:
-        while len(item) < 2:
-            item.append("...")
-        bot.send_poll(
-            chat_id=message.chat.id,
-            question="درس هایی که می خواهید فیلتر بشوند : ",
-            options=item,
-            type="regular",
-            allows_multiple_answers=True,
-            is_anonymous=False,
-        )
+    extra_items = []
+    while len(answer_options) > 10:
+        extra_items.append(answer_options.pop())
+    bot.send_poll(
+        chat_id=message.chat.id,
+        question="درس هایی که می خواهید فیلتر بشوند : ",
+        options=answer_options,
+        type="regular",
+        allows_multiple_answers=True,
+        is_anonymous=False,
+    )
+    answer = ""
+    for item in extra_items:
+        answer += f"({item})\n"
+    answer = "به دلیل محدودیت تلگرام در ارسال poll موارد زیر ارسال نشد. لطفا در  صورت تمایل در بخش فیلتر کردن گزارش ها آن را تغییر بدهید." + "\n\n" + answer
+    bot.send_message(message.chat.id, answer)
 
 
 @bot.poll_answer_handler()
