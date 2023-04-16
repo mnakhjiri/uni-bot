@@ -15,14 +15,13 @@ class BaseInlineKeyboard:
         self.prev_markup = prev_markup
 
     def get_markup(self):
+        result = telebot.types.InlineKeyboardMarkup(row_width=self.row_width)
+        keyboards = self.keyboard_buttons
+        for keyboard in keyboards:
+            result.add(keyboard)
         if self.prev_markup is not None:
-            result = telebot.types.InlineKeyboardMarkup(row_width=self.row_width)
-            keyboards = self.keyboard_buttons
-            for keyboard in keyboards:
-                result.add(keyboard)
-            return result
-        else:
-            return telebot.types.InlineKeyboardMarkup([self.keyboard_buttons], row_width=self.row_width)
+            result.add(self.prev_markup)
+        return result
 
     def do_action(self, action: str, message):
         print("fail")
