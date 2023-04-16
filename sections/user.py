@@ -50,35 +50,11 @@ def send_sheet(message):
     bot.send_message(message.chat.id, settings.sheet_url)
 
 
-@bot.message_handler(commands=['dont_show'])
-@save_user_to_db
-def dont_show_word(message):
-    black_word = message.text.replace("/dont_show", "").strip()
-    if black_word == "":
-        bot.send_message(message.chat.id, "لظفا پیام خودت به صورت فرمت زیر بفرستید:")
-        bot.send_message(message.chat.id, f"/dont_show \nمحتوای پیام")
-        return
-    BlackListWord.add_to_black_list(black_word, message.chat.id)
-    bot.send_message(message.chat.id, "عبارت مورد نظر از این به بعد نمایش داده نمی شود.")
-
-
 @save_user_to_db
 def dont_show_word_v2(message):
     black_word = message.text
     BlackListWord.add_to_black_list(black_word, message.chat.id)
     bot.send_message(message.chat.id, "عبارت مورد نظر از این به بعد نمایش داده نمی شود.")
-
-
-@bot.message_handler(commands=['show'])
-@save_user_to_db
-def show_word(message):
-    black_word = message.text.replace("/show", "").strip()
-    if black_word == "":
-        bot.send_message(message.chat.id, "لطفا پیام خودت به صورت فرمت زیر بفرستید:")
-        bot.send_message(message.chat.id, f"/show \nمحتوای پیام")
-        return
-    BlackListWord.remove_from_black_list(black_word, message.chat.id)
-    bot.send_message(message.chat.id, "عبارت مورد نظر از این به بعد نمایش داده می شود.")
 
 
 @save_user_to_db
@@ -104,13 +80,6 @@ def show_blacklist(message):
 def show_hidden_keyboard(message):
     bot.send_message(message.chat.id, "مدیریت عبارات فیلتر شده",
                      reply_markup=keyboards.user_keyboard_hidden_words.get_markup())
-
-
-@bot.message_handler(commands=['reset_hidden_words'])
-@save_user_to_db
-def reset_blacklist(message):
-    BlackListWord.remove_all_black_list(message.chat.id)
-    bot.send_message(message.chat.id, "تمامی عبارات از لیست پنهان حذف شدند.")
 
 
 @save_user_to_db
