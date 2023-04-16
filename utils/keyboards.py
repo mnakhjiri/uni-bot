@@ -32,8 +32,11 @@ class AdminKeyboard(BaseInlineKeyboard):
             admin.get_users(message)
 
 
-admin_keyboard = BaseInlineKeyboard([telebot.types.InlineKeyboardButton(text='آمار', callback_data=f'status'),
-                           telebot.types.InlineKeyboardButton(text='کاربران', callback_data=f'getUsers')], unique_id=0)
+admin_keyboard = BaseInlineKeyboard([telebot.types.InlineKeyboardButton(text='آمار', callback_data=f'0status'),
+                                     telebot.types.InlineKeyboardButton(text='کاربران', callback_data=f'0getUsers')],
+                                    unique_id=0)
+
+
 # test2 = BaseInlineKeyboard([telebot.types.InlineKeyboardButton(text='❌', callback_data=f'test')], unique_id=1,
 #                            prev_markup=test.get_markup())
 
