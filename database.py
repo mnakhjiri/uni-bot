@@ -91,7 +91,7 @@ class Session(BaseModel):
 
 def create_tables():
     with database:
-        database.create_tables([User, BlackListWord])
+        database.create_tables([User, BlackListWord, Session])
 
 
 create_tables()
