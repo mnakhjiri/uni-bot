@@ -79,7 +79,7 @@ user_keyboard_hidden_words = UserKeyboardHiddenWords(
 
 @bot.callback_query_handler(func=lambda call: True)
 def call_handler(call=None):
-    inline_keyboards = {"0": admin_keyboard}
+    inline_keyboards = {"0": admin_keyboard, "1": user_keyboard_hidden_words}
     current_keyboard = inline_keyboards[call.json['data'][0:1]]
     action = call.json['data'][1:]
     if action == "back" and current_keyboard.prev_markup is not None:
