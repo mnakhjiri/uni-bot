@@ -15,7 +15,7 @@ class BaseInlineKeyboard:
         self.prev_markup = prev_markup
 
     @bot.callback_query_handler(func=lambda call: True)
-    def back_button(self, call):
+    def call_handler(self, call=None):
         if call.json['data'] == f"back{self.prev_markup}":
             if self.prev_markup is not None:
                 bot.edit_message_reply_markup(call.message.chat.id, call.message.message_id, self.prev_markup)
