@@ -15,9 +15,9 @@ def status(message):
     result = ""
     number_of_blacklist_words = BlackListWord.select().group_by(BlackListWord.text).count()
     number_of_users_using_blacklist_words = BlackListWord.select().group_by(BlackListWord.user).count()
-    result += f"number_of_users : {number_of_users}\n\n"
-    result += f"number_of_blacklist_words : {number_of_blacklist_words}\n\n"
-    result += f"number_of_users_using_blacklist_words : {number_of_users_using_blacklist_words}"
+    result += f"{number_of_users} : {'تعداد کاربران'}\n\n"
+    result += f"{number_of_blacklist_words} : {'تعداد کلمه های در لیست سیاه'}\n\n"
+    result += f"{number_of_users_using_blacklist_words} : {'تعداد کاربر هایی که از فیلتر پنهان کردن استفاده میکنند'}"
     bot.send_message(message.chat.id, result)
 
 
