@@ -136,6 +136,8 @@ def create_poll(message):
     chunk_size = 10
     lists = [answer_options[i:i + chunk_size] for i in range(0, len(answer_options), chunk_size)]
     for item in lists:
+        while len(item) < 2:
+            item.append("...")
         bot.send_poll(
             chat_id=message.chat.id,
             question="درس هایی که می خواهید فیلتر بشوند : ",
@@ -150,6 +152,8 @@ def create_poll(message):
 def handle_poll(poll):
     courses = settings.poll_answer_options
     for i in range(len(courses)):
+        if courses[i] == "...":
+            continue
         if i in poll.option_ids:
             BlackListWord.add_to_black_list(courses[i], poll.user.id)
         else:
