@@ -131,7 +131,7 @@ def cancel_session(message):
 
 @bot.message_handler(commands=["filter_poll"])
 def create_poll(message):
-    bot.send_message(message.chat.id, "درس هایی که نمی خواهید در ددلاین ها برای شمانمایش داده شوند را انتخاب کنید")
+    bot.send_message(message.chat.id, "درس هایی که نمی خواهید در ددلاین ها برای شما نمایش داده شوند را انتخاب کنید")
     answer_options = settings.poll_answer_options
     extra_items = []
     while len(answer_options) > 10:
