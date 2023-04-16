@@ -70,9 +70,9 @@ admin_keyboard = AdminKeyboard([telebot.types.InlineKeyboardButton(text='آما�
                                unique_id=0, row_width=4)
 
 user_keyboard_hidden_words = UserKeyboardHiddenWords(
-    [telebot.types.InlineKeyboardButton(text='نمایش عبارات فیلتر شده', callback_data=f'1status'),
-     telebot.types.InlineKeyboardButton(text='اضافه کردن عبارت به فیلتر عدم نمایش', callback_data=f'1getUsers'),
-     telebot.types.InlineKeyboardButton(text='حذف عبارت از فیلتر عدم نمایش', callback_data=f'1alert'),
+    [telebot.types.InlineKeyboardButton(text='نمایش عبارات فیلتر شده', callback_data=f'1view'),
+     telebot.types.InlineKeyboardButton(text='اضافه کردن عبارت به فیلتر عدم نمایش', callback_data=f'1show'),
+     telebot.types.InlineKeyboardButton(text='حذف عبارت از فیلتر عدم نمایش', callback_data=f'1dontshow'),
      telebot.types.InlineKeyboardButton(text='ریست کردن کلمات در فیلتر عدم نمایش', callback_data=f'1reset')],
     unique_id=1, row_width=4)
 
