@@ -27,6 +27,7 @@ class BaseInlineKeyboard:
 class AdminKeyboard(BaseInlineKeyboard):
     def do_action(self, action: str, message):
         if action == "status":
+            print("status")
             admin.status(message)
         elif action == "getUsers":
             admin.get_users(message)
