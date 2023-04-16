@@ -16,9 +16,11 @@ class BaseInlineKeyboard:
 
     def get_markup(self):
         if self.prev_markup is not None:
+            result = telebot.types.InlineKeyboardMarkup(row_width=self.row_width)
             keyboards = self.keyboard_buttons
-            keyboards.append(telebot.types.InlineKeyboardButton(text='برگشت', callback_data=f'{self.unique_id}back'))
-            return telebot.types.InlineKeyboardMarkup([keyboards], row_width=self.row_width)
+            for keyboard in keyboards:
+                result.add(keyboard)
+            return result
         else:
             return telebot.types.InlineKeyboardMarkup([self.keyboard_buttons], row_width=self.row_width)
 
