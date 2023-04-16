@@ -49,7 +49,7 @@ admin_keyboard = AdminKeyboard([telebot.types.InlineKeyboardButton(text='آما�
                                 telebot.types.InlineKeyboardButton(text='ارسال اطلاعیه', callback_data=f'0alert'),
                                 telebot.types.InlineKeyboardButton(text='اطلاعیه تست',
                                                                    callback_data=f'0alertTest')],
-                               unique_id=0, row_width=1)
+                               unique_id=0, row_width=4)
 
 
 # test2 = BaseInlineKeyboard([telebot.types.InlineKeyboardButton(text='❌', callback_data=f'test')], unique_id=1,
