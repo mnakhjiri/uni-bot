@@ -1,5 +1,5 @@
 
-# Uni bot
+# UniBot
 
 A simple telegram bot for handling university deadlines and exams written in python.
 
