@@ -37,12 +37,18 @@ class AdminKeyboard(BaseInlineKeyboard):
         elif action == "alert":
             bot.send_message(message.chat.id, "لطفا متن اطلاعیه را وارد نمایید. برای انصراف /cancel را ارسال نمایید.")
             database.Session.create_session(message.chat.id, AdminSessionStates.WAITING_TO_SEND_ALERT)
+        elif action == "alertTest":
+            bot.send_message(message.chat.id,
+                             "لطفا متن اطلاعیه آزمایشی را وارد نمایید. برای انصراف /cancel را ارسال نمایید.")
+            database.Session.create_session(message.chat.id, AdminSessionStates.WAITING_TO_SEND_TEST_ALERT)
 
 
 admin_keyboard = AdminKeyboard([telebot.types.InlineKeyboardButton(text='آمار', callback_data=f'0status'),
                                 telebot.types.InlineKeyboardButton(text='کاربران', callback_data=f'0getUsers'),
-                                telebot.types.InlineKeyboardButton(text='ارسال اطلاعیه', callback_data=f'0alert')],
-                               unique_id=0, row_width=3)
+                                telebot.types.InlineKeyboardButton(text='ارسال اطلاعیه', callback_data=f'0alert'),
+                                telebot.types.InlineKeyboardButton(text='ارسال اطلاعیه تست',
+                                                                   callback_data=f'0alertTest')],
+                               unique_id=0, row_width=4)
 
 
 # test2 = BaseInlineKeyboard([telebot.types.InlineKeyboardButton(text='❌', callback_data=f'test')], unique_id=1,

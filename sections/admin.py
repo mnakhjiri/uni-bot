@@ -61,13 +61,20 @@ def send_alert(message):
 
 def send_alert_v2(message):
     alert_str = message.text
+    users = User.get_users()
+
+    utils.send_message_to_users(alert_str, users)
+
+
+def send_alert_v2_test(message):
+    alert_str = message.text
     users = [User.get(chat_id=message.chat.id)]
 
     utils.send_message_to_users(alert_str, users)
 
 
-@bot.message_handler(commands=['test'])
+@bot.message_handler(commands=['admin'])
 @save_user_to_db
 @admin
 def test(message):
-    bot.send_message(message.chat.id, "Hello", reply_markup=keyboards.admin_keyboard.get_markup())
+    bot.send_message(message.chat.id, "پنل مدیریت", reply_markup=keyboards.admin_keyboard.get_markup())
