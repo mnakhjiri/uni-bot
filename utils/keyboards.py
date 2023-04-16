@@ -1,4 +1,6 @@
 import telebot
+from utils.enums import AdminSessionStates
+import database
 import settings
 from sections import admin
 
@@ -32,11 +34,15 @@ class AdminKeyboard(BaseInlineKeyboard):
             admin.status(message)
         elif action == "getUsers":
             admin.get_users(message)
+        elif action == "alert":
+            bot.send_message(message.chat.id, "لطفا متن اطلاعیه را وارد نمایید. برای انصراف /cancel را ارسال نمایید.")
+            database.Session.create_session(message.chat.id, AdminSessionStates.WAITING_TO_SEND_ALERT)
 
 
 admin_keyboard = AdminKeyboard([telebot.types.InlineKeyboardButton(text='آمار', callback_data=f'0status'),
-                                telebot.types.InlineKeyboardButton(text='کاربران', callback_data=f'0getUsers')],
-                               unique_id=0)
+                                telebot.types.InlineKeyboardButton(text='کاربران', callback_data=f'0getUsers'),
+                                telebot.types.InlineKeyboardButton(text='ارسال اطلاعیه', callback_data=f'0alert')],
+                               unique_id=0, row_width=3)
 
 
 # test2 = BaseInlineKeyboard([telebot.types.InlineKeyboardButton(text='❌', callback_data=f'test')], unique_id=1,

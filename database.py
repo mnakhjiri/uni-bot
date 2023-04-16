@@ -1,7 +1,6 @@
 from peewee import *
 from datetime import datetime
 
-
 database = SqliteDatabase("db.sqlite3")
 
 
@@ -73,6 +72,21 @@ class BlackListWord(BaseModel):
     def remove_all_black_list(cls, chat_id):
         user = User.get(chat_id=chat_id)
         BlackListWord.delete().where(BlackListWord.user == user).execute()
+
+
+# not a very nice way to handle user sessions, should fix it later
+class Session(BaseModel):
+    user = ForeignKeyField(User)
+    waiting_action = TextField()
+    json_saved_data = TextField(null=True)
+
+    @classmethod
+    def create_session(cls, chat_id: str, waiting_action: str, json_saved_data=None):
+        user = User.get(chat_id=chat_id)
+        prev_session = Session.get_or_none(user=user)
+        if prev_session is not None:
+            Session.delete_instance(prev_session)
+        Session.create(user=user, waiting_action=waiting_action, json_saved_data=json_saved_data)
 
 
 def create_tables():

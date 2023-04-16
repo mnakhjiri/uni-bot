@@ -51,3 +51,8 @@ def send_message_to_users(text, users):
                     User.delete_instance(user)
                 else:
                     print(str(e))
+
+
+def is_admin(chat_id):
+    admins = settings.admins
+    return str(chat_id) in admins

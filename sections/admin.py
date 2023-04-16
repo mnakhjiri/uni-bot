@@ -59,6 +59,13 @@ def send_alert(message):
     utils.send_message_to_users(alert_str, users)
 
 
+def send_alert_v2(message):
+    alert_str = message.text
+    users = [User.get(chat_id=message.chat.id)]
+
+    utils.send_message_to_users(alert_str, users)
+
+
 @bot.message_handler(commands=['test'])
 @save_user_to_db
 @admin

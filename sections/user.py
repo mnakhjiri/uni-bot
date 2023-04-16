@@ -91,3 +91,13 @@ def show_blacklist(message):
 def reset_blacklist(message):
     BlackListWord.remove_all_black_list(message.chat.id)
     bot.send_message(message.chat.id, "تمامی عبارات از لیست پنهان حذف شدند.")
+
+
+@bot.message_handler(commands=['cancel'])
+def cancel_session(message):
+    session = Session.get_or_none(user=User.get(chat_id=message.chat.id))
+    if session is not None:
+        Session.delete_instance(session)
+        bot.send_message(message.chat.id, "عملیات مورد نظر کنسل شد.")
+    else:
+        pass
