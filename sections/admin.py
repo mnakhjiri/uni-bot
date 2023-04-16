@@ -63,4 +63,4 @@ def send_alert(message):
 @save_user_to_db
 @admin
 def test(message):
-    bot.send_message(message.chat.id, "Hello", reply_markup=keyboards.test.get_markup())
+    bot.send_message(message.chat.id, "Hello", reply_markup=keyboards.test2.get_markup())
