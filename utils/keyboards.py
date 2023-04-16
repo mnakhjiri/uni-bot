@@ -46,7 +46,7 @@ class AdminKeyboard(BaseInlineKeyboard):
 admin_keyboard = AdminKeyboard([telebot.types.InlineKeyboardButton(text='آمار', callback_data=f'0status'),
                                 telebot.types.InlineKeyboardButton(text='کاربران', callback_data=f'0getUsers'),
                                 telebot.types.InlineKeyboardButton(text='ارسال اطلاعیه', callback_data=f'0alert'),
-                                telebot.types.InlineKeyboardButton(text='ارسال اطلاعیه تست',
+                                telebot.types.InlineKeyboardButton(text='اطلاعیه تست',
                                                                    callback_data=f'0alertTest')],
                                unique_id=0, row_width=3)
 
