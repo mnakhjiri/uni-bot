@@ -127,3 +127,29 @@ def cancel_session(message):
         bot.send_message(message.chat.id, "عملیات مورد نظر کنسل شد.")
     else:
         pass
+
+
+@bot.message_handler(commands=["filter_poll"])
+def create_poll(message):
+    bot.send_message(message.chat.id, "درس هایی که نمی خواهید در ددلاین ها برای شمانمایش داده شوند را انتخاب کنید")
+    answer_options = settings.poll_answer_options
+
+    bot.send_poll(
+        chat_id=message.chat.id,
+        question="درس هایی که می خواهید فیلتر بشوند : ",
+        options=answer_options,
+        type="regular",
+        allows_multiple_answers=True,
+        is_anonymous=False,
+    )
+
+
+@bot.poll_answer_handler()
+def handle_poll(poll):
+    courses = settings.poll_answer_options
+    for i in range(len(courses)):
+        if i in poll.option_ids:
+            BlackListWord.add_to_black_list(courses[i], poll.user.id)
+        else:
+            BlackListWord.remove_from_black_list(courses[i], poll.user.id)
+    bot.send_message(poll.user.id, "فیلتر مورد نظر با موفقیت اعمال شد")

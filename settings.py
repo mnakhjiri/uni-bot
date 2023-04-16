@@ -16,3 +16,4 @@ hw_gid = "0"
 sheet_url = f"https://docs.google.com/spreadsheets/d/{sheet_id}"
 exam_url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv&gid={exams_gid}"
 hw_url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv&gid={hw_gid}"
+poll_answer_options = ["نظریه گراف", "مدار الک", "معماری", "دی اس", "سیستم عامل", "هوش عبدوس", "هوش سلیمی", "سیگنال", "مدار مجتمع", "جبر خطی", "آمار و احتمال"]
