@@ -1,4 +1,5 @@
 # importing necessary sections
+import sections.user
 from utils.enums import *
 from sections.admin import *
 from sections.user import *
@@ -15,8 +16,12 @@ def handling_message(message):
         if utils.is_admin(message.chat.id):
             if user_session.waiting_action == AdminSessionStates.WAITING_TO_SEND_ALERT:
                 send_alert_v2(message)
-            if user_session.waiting_action == AdminSessionStates.WAITING_TO_SEND_TEST_ALERT:
+            elif user_session.waiting_action == AdminSessionStates.WAITING_TO_SEND_TEST_ALERT:
                 send_alert_v2_test(message)
+        if user_session.waiting_action == UserSessionStates.WAITING_TO_SEND_SHOW_WORD:
+            sections.user.show_word_v2(message)
+        elif user_session.waiting_action == UserSessionStates.WAITING_TO_SEND_DONT_SHOW_WORD:
+            sections.user.dont_show_word_v2(message)
 
         Session.delete_instance(user_session)
 

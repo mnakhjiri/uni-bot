@@ -3,6 +3,7 @@ import threading
 from utils import utils
 from utils.decorators import *
 from database import *
+from utils import keyboards
 
 bot = settings.bot
 
@@ -61,6 +62,13 @@ def dont_show_word(message):
     bot.send_message(message.chat.id, "عبارت مورد نظر از این به بعد نمایش داده نمی شود.")
 
 
+@save_user_to_db
+def dont_show_word_v2(message):
+    black_word = message.text
+    BlackListWord.add_to_black_list(black_word, message.chat.id)
+    bot.send_message(message.chat.id, "عبارت مورد نظر از این به بعد نمایش داده نمی شود.")
+
+
 @bot.message_handler(commands=['show'])
 @save_user_to_db
 def show_word(message):
@@ -73,7 +81,13 @@ def show_word(message):
     bot.send_message(message.chat.id, "عبارت مورد نظر از این به بعد نمایش داده می شود.")
 
 
-@bot.message_handler(commands=['hidden_words'])
+@save_user_to_db
+def show_word_v2(message):
+    black_word = message.text
+    BlackListWord.remove_from_black_list(black_word, message.chat.id)
+    bot.send_message(message.chat.id, "عبارت مورد نظر از این به بعد نمایش داده می شود.")
+
+
 @save_user_to_db
 def show_blacklist(message):
     words = BlackListWord.get_black_list_words(message.chat.id)
@@ -86,9 +100,21 @@ def show_blacklist(message):
         bot.send_message(message.chat.id, out)
 
 
+@bot.message_handler(commands=['hidden_words'])
+def show_hidden_keyboard(message):
+    bot.send_message(message.chat.id, "مدیریت عبارات فیلتر شده",
+                     reply_markup=keyboards.user_keyboard_hidden_words.get_markup())
+
+
 @bot.message_handler(commands=['reset_hidden_words'])
 @save_user_to_db
 def reset_blacklist(message):
+    BlackListWord.remove_all_black_list(message.chat.id)
+    bot.send_message(message.chat.id, "تمامی عبارات از لیست پنهان حذف شدند.")
+
+
+@save_user_to_db
+def reset_blacklist_v2(message):
     BlackListWord.remove_all_black_list(message.chat.id)
     bot.send_message(message.chat.id, "تمامی عبارات از لیست پنهان حذف شدند.")
 
