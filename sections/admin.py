@@ -28,7 +28,7 @@ def get_users(message):
     users = User.get_users()
     result = ""
     for user in users:
-        result += f"{user.name} {user.last_name} : {user.chat_id}\n"
+        result += f"{user.name} {user.last_name}\n"
 
     bot.send_message(message.chat.id, result)
 
