@@ -51,4 +51,5 @@ def call_handler(call=None):
         bot.edit_message_reply_markup(call.message.chat.id, call.message.message_id,
                                       reply_markup=current_keyboard.prev_markup)
     else:
+        print(action)
         current_keyboard.do_action(action, call.message)
