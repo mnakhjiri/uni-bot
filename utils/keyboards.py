@@ -53,3 +53,4 @@ def call_handler(call=None):
                                       reply_markup=current_keyboard.prev_markup)
     else:
         current_keyboard.do_action(action, call.message)
+    bot.answer_callback_query(call.id)
