@@ -76,5 +76,5 @@ def send_alert_v2_test(message):
 @bot.message_handler(commands=['admin'])
 @save_user_to_db
 @admin
-def test(message):
+def admin_handler(message):
     bot.send_message(message.chat.id, "پنل مدیریت", reply_markup=keyboards.admin_keyboard.get_markup())
