@@ -2,6 +2,7 @@ from peewee import *
 from datetime import datetime
 import settings
 
+mysql_database = None
 if settings.mysql_active:
     mysql_database = MySQLDatabase(user=settings.db_user,
                                    password=settings.db_pass,
@@ -9,8 +10,9 @@ if settings.mysql_active:
                                    port=settings.db_port,
                                    database=settings.db_name, )
 
-
 database = SqliteDatabase("db.sqlite3")
+if mysql_database is not None:
+    database = mysql_database
 
 
 class BaseModel(Model):
