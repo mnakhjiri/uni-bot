@@ -23,3 +23,4 @@ db_pass = config["database"]["db_pass"]
 db_host = config["database"]["db_host"]
 db_port = config["database"]["db_port"]
 db_name = config["database"]["db_name"]
+mysql_active = False

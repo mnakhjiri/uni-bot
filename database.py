@@ -2,12 +2,15 @@ from peewee import *
 from datetime import datetime
 import settings
 
+if settings.mysql_active:
+    mysql_database = MySQLDatabase(user=settings.db_user,
+                                   password=settings.db_pass,
+                                   host=settings.db_host,
+                                   port=settings.db_port,
+                                   database=settings.db_name, )
+
+
 database = SqliteDatabase("db.sqlite3")
-mysql_database = MySQLDatabase(user=settings.db_user,
-                               password=settings.db_pass,
-                               host=settings.db_host,
-                               port=settings.db_port,
-                               database=settings.db_name, )
 
 
 class BaseModel(Model):
