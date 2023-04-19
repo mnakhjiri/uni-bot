@@ -8,7 +8,7 @@ if settings.mysql_active:
                                    password=settings.db_pass,
                                    host=settings.db_host,
                                    port=int(settings.db_port),
-                                   database=settings.db_name,)
+                                   database=settings.db_name, )
 
 database = SqliteDatabase("db.sqlite3")
 if mysql_database is not None:

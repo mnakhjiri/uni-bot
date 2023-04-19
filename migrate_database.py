@@ -1,3 +1,4 @@
+# old data should be restored from database_temp
 import database_temp
 import database
 
