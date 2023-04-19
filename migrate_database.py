@@ -1,8 +1,5 @@
-from playhouse.reflection import Introspector
+import database_temp
+import database
 
-from database import *
-
-introspector = Introspector.from_database(database)
-models = introspector.generate_models()
-mysql_database.create_tables(list(models.values()))
-mysql_database.close()
+for sqlite_record in database_temp.database.select():
+    database.database.create(name=sqlite_record.name, age=sqlite_record.age)
