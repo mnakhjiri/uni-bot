@@ -90,6 +90,7 @@ class Session(BaseModel):
     user = ForeignKeyField(User)
     waiting_action = TextField()
     json_saved_data = TextField(null=True)
+    test = TextField(null=True)
 
     @classmethod
     def create_session(cls, chat_id: str, waiting_action: str, json_saved_data=None):
