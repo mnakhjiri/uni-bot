@@ -25,3 +25,7 @@ db_host = config["database"]["db_host"]
 db_port = config["database"]["db_port"]
 db_name = config["database"]["db_name"]
 mysql_active = False
+try:
+    from local_settings import *
+except ImportError:
+    pass
