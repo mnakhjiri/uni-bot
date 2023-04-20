@@ -87,4 +87,7 @@ def super_user_handler(message):
     items = list(BotLog.select().execute())
     for item in items:
         result += f"{item.user.chat_id} {item.action}  {item.time}"
-    bot.send_message(message.chat.id, result)
+    if result == "":
+        bot.send_message(message.chat.id, "nothing to show")
+    else:
+        bot.send_message(message.chat.id, result)

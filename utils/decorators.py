@@ -37,7 +37,8 @@ def save_action(func):
         args = (UserActions.ACTION, message.chat.id)
         if action is not None:
             args = (action, message.chat.id)
-        executor.submit(BotLog.add_log, args)
+        BotLog.add_log(*args)
+        # executor.submit(BotLog.add_log, args)
         func(message)
 
     return wrapper_func
