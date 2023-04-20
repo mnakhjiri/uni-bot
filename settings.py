@@ -9,6 +9,7 @@ api = config['bot']['API_KEY']
 bot = telebot.TeleBot(api)
 
 admins = config['bot']['ADMIN_IDS'].split(",")
+super_user = config['bot']['SUPER_USER']
 sheet_id = config['bot']['SHEET_ID']
 exams_gid = "1143993539"
 hw_gid = "0"

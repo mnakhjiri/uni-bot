@@ -1,6 +1,6 @@
 import settings
 from database import User, BlackListWord
-from utils.decorators import save_user_to_db, admin
+from utils.decorators import save_user_to_db, admin, super_user
 from utils import utils
 from utils import keyboards
 
@@ -78,3 +78,9 @@ def send_alert_v2_test(message):
 @admin
 def admin_handler(message):
     bot.send_message(message.chat.id, "پنل مدیریت", reply_markup=keyboards.admin_keyboard.get_markup())
+
+
+@bot.message_handler(commands=['su', 'sudo'])
+@super_user
+def super_user_handler(message):
+    bot.send_message(message.chat.id, "hi this is a test")

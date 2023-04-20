@@ -19,3 +19,12 @@ def admin(func):
             func(message)
 
     return wrapper_func
+
+
+def super_user(func):
+    def wrapper_func(message):
+        super_user_admin = settings.super_user
+        if str(message.chat.id) == super_user_admin:
+            func(message)
+
+    return wrapper_func
