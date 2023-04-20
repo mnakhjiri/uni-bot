@@ -1,8 +1,7 @@
-import utils.utils
 from database import User, BotLog
 import settings
 from utils.enums import UserActions
-
+from utils.utils import executor
 
 def save_user_to_db(func):
     def wrapper_func(message):
@@ -37,7 +36,7 @@ def save_action(func):
         args = (UserActions.ACTION, message.chat.id)
         if action is not None:
             args = (action, message.chat.id)
-        utils.executor(BotLog.add_log, args)
+        executor(BotLog.add_log, args)
         func(message)
 
     return wrapper_func
