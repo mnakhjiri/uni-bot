@@ -17,24 +17,28 @@ def greet(message):
 
 @bot.message_handler(commands=['homeworks'])
 @save_user_to_db
+@save_action(action=UserActions.SEND_HW)
 def homework(message):
     threading.Thread(target=utils.get_csv, args=(message, settings.hw_url)).start()
 
 
 @bot.message_handler(commands=['exams'])
 @save_user_to_db
+@save_action(action=UserActions.SEND_EXAMS)
 def exams(message):
     threading.Thread(target=utils.get_csv, args=(message, settings.exam_url)).start()
 
 
 @bot.message_handler(commands=['id'])
 @save_user_to_db
+@save_action(action=UserActions.SEND_ID)
 def get_id(message):
     bot.send_message(message.chat.id, str(message.chat.id))
 
 
 @bot.message_handler(commands=['feedback'])
 @save_user_to_db
+@save_action(action=UserActions.SEND_FEEDBACK)
 def send_feedback(message):
     feedback_str = message.text.replace("/feedback", "")
     if feedback_str == "":
@@ -47,11 +51,13 @@ def send_feedback(message):
 
 @bot.message_handler(commands=['sheet'])
 @save_user_to_db
+@save_action(action=UserActions.SEND_SHEET)
 def send_sheet(message):
     bot.send_message(message.chat.id, settings.sheet_url)
 
 
 @save_user_to_db
+@save_action(action=UserActions.DONT_SHOW)
 def dont_show_word_v2(message):
     black_word = message.text
     BlackListWord.add_to_black_list(black_word, message.chat.id)
@@ -59,6 +65,7 @@ def dont_show_word_v2(message):
 
 
 @save_user_to_db
+@save_action(action=UserActions.SHOW_WORD)
 def show_word_v2(message):
     black_word = message.text
     BlackListWord.remove_from_black_list(black_word, message.chat.id)
@@ -66,6 +73,7 @@ def show_word_v2(message):
 
 
 @save_user_to_db
+@save_action(action=UserActions.SEND_FILTERED_WORDS)
 def show_blacklist(message):
     words = BlackListWord.get_black_list_words(message.chat.id)
     out = ""
@@ -78,20 +86,22 @@ def show_blacklist(message):
 
 
 @bot.message_handler(commands=['hidden_words'])
+@save_action(action=UserActions.SHOW_FILTERED_PANEL)
 def show_hidden_keyboard(message):
     bot.send_message(message.chat.id, "مدیریت عبارات فیلتر شده",
                      reply_markup=keyboards.user_keyboard_hidden_words.get_markup())
 
 
 @save_user_to_db
+@save_action(action=UserActions.RESET_BLACKLIST)
 def reset_blacklist_v2(message):
     BlackListWord.remove_all_black_list(message.chat.id)
     bot.send_message(message.chat.id, "تمامی عبارات از لیست پنهان حذف شدند.")
 
 
 @bot.message_handler(commands=['cancel'])
-# @save_action
-def cancel_session(message, action=UserActions.CANCEL_SESSION):
+@save_action(action=UserActions.CANCEL_SESSION)
+def cancel_session(message):
     session = Session.get_or_none(user=User.get(chat_id=message.chat.id))
     if session is not None:
         Session.delete_instance(session)
@@ -100,6 +110,7 @@ def cancel_session(message, action=UserActions.CANCEL_SESSION):
         pass
 
 
+@save_action(action=UserActions.SEND_POLL)
 @bot.message_handler(commands=["filter_poll"])
 def create_poll(message):
     bot.send_message(message.chat.id, "درس هایی که نمی خواهید در ددلاین ها برای شما نمایش داده شوند را انتخاب کنید")
@@ -124,7 +135,7 @@ def create_poll(message):
 
 
 @bot.poll_answer_handler()
-# @save_action(action=UserActions.ANSWER_POLL)
+@save_action(action=UserActions.ANSWER_POLL)
 def handle_poll(poll):
     courses = settings.poll_answer_options
     for i in range(len(courses)):
