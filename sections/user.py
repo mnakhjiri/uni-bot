@@ -89,8 +89,8 @@ def reset_blacklist_v2(message):
 
 
 @bot.message_handler(commands=['cancel'])
-@save_action(action=UserActions.CANCEL_SESSION)
-def cancel_session(message):
+@save_action
+def cancel_session(message, action=UserActions.CANCEL_SESSION):
     session = Session.get_or_none(user=User.get(chat_id=message.chat.id))
     if session is not None:
         Session.delete_instance(session)

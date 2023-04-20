@@ -32,8 +32,8 @@ def super_user(func):
     return wrapper_func
 
 
-def save_action(func=None, action=None):
-    def wrapper_func(message):
+def save_action(func):
+    def wrapper_func(message, action=None):
         args = (UserActions.ACTION, message.chat.id)
         if action is not None:
             args = (action, message.chat.id)
