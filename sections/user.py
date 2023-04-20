@@ -10,6 +10,7 @@ bot = settings.bot
 
 @bot.message_handler(commands=['start'])
 @save_user_to_db
+@save_action(action=UserActions.START_BOT)
 def greet(message):
     bot.send_message(message.chat.id, f"سلام، از این بات می توانید آخرین وضعیت تکالیف و امتحانات را مشاهده نمایید.")
 

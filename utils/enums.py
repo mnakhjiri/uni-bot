@@ -21,3 +21,4 @@ class UserActions(BaseEnum):
     ACTION = "userAction"
     ANSWER_POLL = "userAnswerPoll"
     CANCEL_SESSION = "cancelSession"
+    START_BOT = "startBot"

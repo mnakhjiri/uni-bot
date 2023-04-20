@@ -40,7 +40,6 @@ def save_action(action=None):
                 args = (action, message.chat.id)
             BotLog.add_log(*args)
             # executor.submit(BotLog.add_log, args)
-            func(message)
-            return wrapper
+            return func(message)
 
     return wrapper_function
