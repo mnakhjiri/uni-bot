@@ -15,3 +15,7 @@ class UserSessionStates(BaseEnum):
     WAITING_TO_SEND_FEEDBACK = "userWaitingToSendFeedBack"
     WAITING_TO_SEND_SHOW_WORD = "WAITING_TO_SEND_SHOW_WORD"
     WAITING_TO_SEND_DONT_SHOW_WORD = "WAITING_TO_SEND_DONT_SHOW_WORD"
+
+
+class UserActions(BaseEnum):
+    pass

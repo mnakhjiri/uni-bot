@@ -24,6 +24,7 @@ class User(BaseModel):
     name = TextField()
     last_name = TextField()
     chat_id = TextField()
+    is_ban = BooleanField(default=False)
 
     @classmethod
     def add_user(cls, name, last_name, chat_id):
@@ -100,9 +101,20 @@ class Session(BaseModel):
         Session.create(user=user, waiting_action=waiting_action, json_saved_data=json_saved_data)
 
 
+class BotLog(BaseModel):
+    user = ForeignKeyField(User)
+    action = TextField()
+    time = DateTimeField(default=datetime.utcnow())
+
+    @classmethod
+    def add_log(cls, action, chat_id):
+        user = User.get(chat_id=chat_id)
+        BotLog.create(user=user, action=action)
+
+
 def create_tables():
     with database:
-        database.create_tables([User, BlackListWord, Session])
+        database.create_tables([User, BlackListWord, Session, BotLog])
 
 
 create_tables()
