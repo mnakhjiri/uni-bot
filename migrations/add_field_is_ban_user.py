@@ -1,5 +1,9 @@
-from database import *
+import sys
+
 from playhouse.migrate import *
+
+sys.path.append('../uni-bot')
+from database import *
 
 migrator = MySQLMigrator(database)
 
