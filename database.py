@@ -109,7 +109,7 @@ class BotLog(BaseModel):
     @classmethod
     def add_log(cls, action, chat_id):
         user = User.get(chat_id=chat_id)
-        BotLog.create(user=user, action=action)
+        BotLog.create(user=user, action=action, time=datetime.utcnow())
 
 
 def create_tables():
