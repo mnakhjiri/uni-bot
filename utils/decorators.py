@@ -32,13 +32,14 @@ def super_user(func):
     return wrapper_func
 
 
-def save_action(func):
-    def wrapper_func(message, action=None):
-        args = (UserActions.ACTION, message.chat.id)
-        if action is not None:
-            args = (action, message.chat.id)
-        BotLog.add_log(*args)
-        # executor.submit(BotLog.add_log, args)
-        func(message)
+def save_action(action=None):
+    def wrapper_function(func):
+        def wrapper(message):
+            args = (UserActions.ACTION, message.chat.id)
+            if action is not None:
+                args = (action, message.chat.id)
+            BotLog.add_log(*args)
+            # executor.submit(BotLog.add_log, args)
+            func(message)
 
-    return wrapper_func
+    return wrapper_function
