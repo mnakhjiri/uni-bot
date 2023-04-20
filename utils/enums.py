@@ -18,4 +18,6 @@ class UserSessionStates(BaseEnum):
 
 
 class UserActions(BaseEnum):
-    pass
+    ACTION = "userAction"
+    ANSWER_POLL = "userAnswerPoll"
+    CANCEL_SESSION = "cancelSession"

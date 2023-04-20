@@ -1,5 +1,7 @@
-from database import User
+import utils.utils
+from database import User, BotLog
 import settings
+from utils.enums import UserActions
 
 
 def save_user_to_db(func):
@@ -26,5 +28,16 @@ def super_user(func):
         super_user_admin = settings.super_user
         if str(message.chat.id) == super_user_admin:
             func(message)
+
+    return wrapper_func
+
+
+def save_action(func=None, action=None):
+    def wrapper_func(message):
+        args = (UserActions.ACTION, message.chat.id)
+        if action is not None:
+            args = (action, message.chat.id)
+        utils.executor(BotLog.add_log, args)
+        func(message)
 
     return wrapper_func

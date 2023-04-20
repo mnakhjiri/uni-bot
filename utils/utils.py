@@ -1,9 +1,12 @@
 import pandas as pd
+from concurrent.futures import ThreadPoolExecutor
 
 import settings
 from database import BlackListWord, User
 
 bot = settings.bot
+
+executor = ThreadPoolExecutor(5)
 
 
 def get_csv(message, url):

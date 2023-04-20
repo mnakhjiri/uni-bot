@@ -89,6 +89,7 @@ def reset_blacklist_v2(message):
 
 
 @bot.message_handler(commands=['cancel'])
+@save_action(action=UserActions.CANCEL_SESSION)
 def cancel_session(message):
     session = Session.get_or_none(user=User.get(chat_id=message.chat.id))
     if session is not None:
@@ -122,6 +123,7 @@ def create_poll(message):
 
 
 @bot.poll_answer_handler()
+@save_action(action=UserActions.ANSWER_POLL)
 def handle_poll(poll):
     courses = settings.poll_answer_options
     for i in range(len(courses)):
