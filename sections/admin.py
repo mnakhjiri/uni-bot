@@ -1,5 +1,5 @@
 import settings
-from database import User, BlackListWord
+from database import User, BlackListWord, BotLog
 from utils.decorators import save_user_to_db, admin, super_user
 from utils import utils
 from utils import keyboards
@@ -83,4 +83,8 @@ def admin_handler(message):
 @bot.message_handler(commands=['su', 'sudo'])
 @super_user
 def super_user_handler(message):
-    bot.send_message(message.chat.id, "hi this is a test")
+    result = ""
+    items = list(BotLog.select().execute())
+    for item in items:
+        result += f"{item.user.chat_id} {item.action}  {item.time}"
+    bot.send_message(message.chat.id, result)
