@@ -1,3 +1,5 @@
+from datetime import datetime
+from datetime import timedelta
 import settings
 from database import User, BlackListWord, BotLog
 from utils.decorators import save_user_to_db, admin, super_user
@@ -86,7 +88,7 @@ def super_user_handler(message):
     result = ""
     items = list(BotLog.select().execute())
     for item in items:
-        result += f"{item.user.chat_id} {item.action}  {item.time}\n\n"
+        result += f"{item.user.chat_id} {item.action}  {item.time + timedelta(hours=3, minutes=30)}\n\n"
     if result == "":
         bot.send_message(message.chat.id, "nothing to show")
     else:
