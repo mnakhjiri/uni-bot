@@ -123,8 +123,8 @@ def create_poll(message):
 
 
 @bot.poll_answer_handler()
-@save_action(action=UserActions.ANSWER_POLL)
-def handle_poll(poll):
+@save_action
+def handle_poll(poll, action=UserActions.ANSWER_POLL):
     courses = settings.poll_answer_options
     for i in range(len(courses)):
         if courses[i] == "...":
