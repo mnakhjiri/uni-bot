@@ -41,5 +41,6 @@ def save_action(action=None):
             BotLog.add_log(*args)
             # executor.submit(BotLog.add_log, args)
             func(message)
+            return wrapper
 
     return wrapper_function
