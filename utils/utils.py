@@ -2,6 +2,7 @@ import pandas as pd
 from concurrent.futures import ThreadPoolExecutor
 import settings
 from database import BlackListWord, User, UserCustomConfigs
+from utils.keyboards import *
 from utils.enums import UserCustomConfigsEnum
 
 bot = settings.bot
@@ -59,7 +60,7 @@ def send_message_to_users(text, users):
                 break
         if can_send:
             try:
-                bot.send_message(user.chat_id, text)
+                bot.send_message(user.chat_id, text, reply_markup=dontShowAlertsKeyboard)
             except Exception as e:
                 if "bot was blocked by the user" in str(e):
                     User.delete_instance(user)
