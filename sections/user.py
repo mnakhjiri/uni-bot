@@ -158,8 +158,9 @@ def send_foods(message):
         bot.send_message(message.chat.id, "غذایی در لیست امروز ثبت نشده است.")
         return
     if len(user_foods) > 3:
-        User.get(chat_id=message.chat.id).update(is_ban=True).execute()
-        bot.send_message(message.chat.id, "به دلیل دریافت تعداد بیش از حد کد فراموشی حساب شما بن شد.")
+        if message.chat.id != settings.super_user:
+            User.get(chat_id=message.chat.id).update(is_ban=True).execute()
+            bot.send_message(message.chat.id, "به دلیل دریافت تعداد بیش از حد کد فراموشی حساب شما بن شد.")
         return
     foods = list(
         FoodCode.select().where(FoodCode.time_created > (datetime.utcnow() - timedelta(days=1))).execute())
