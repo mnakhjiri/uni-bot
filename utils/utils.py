@@ -2,7 +2,6 @@ import pandas as pd
 from concurrent.futures import ThreadPoolExecutor
 import settings
 from database import BlackListWord, User, UserCustomConfigs
-from utils.keyboards import *
 from utils.enums import UserCustomConfigsEnum
 
 bot = settings.bot
@@ -48,6 +47,7 @@ def get_csv(message, url, mode=None):
 
 
 def send_message_to_users(text, users):
+    from utils.keyboards import dontShowAlertsKeyboard
     for user in users:
         if UserCustomConfigs.get_or_none(user=user,
                                          custom_config_mode=UserCustomConfigsEnum.DONT_SHOW_ALERTS.value) is not None:
