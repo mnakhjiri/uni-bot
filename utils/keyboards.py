@@ -88,7 +88,7 @@ class GetFoodKeyboard(BaseInlineKeyboard):
                 to_user_chat = settings.bot.get_chat(message.chat.id)
                 if to_user_chat.username is not None:
                     bot.send_message(result, f"کاربر زیر غذای شما را دریافت کرد:")
-                    bot.send_message(result, f"{to_user_chat.username}")
+                    bot.send_message(result, f"@{to_user_chat.username}")
                 else:
                     name = chat.first_name
                     last_name = chat.last_name
