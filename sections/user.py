@@ -141,9 +141,9 @@ def create_poll(message):
 def food(message):
     message_str = "تبادل کد فراموشی (آزمایشی)"
     message_str += "\n مقررات: "
-    message_str += "\n\n در صورت دریافت  گزارش تخلف بن خواهید شد."
-    message_str += "\n\n کد را در بات به اشتراک نگذارید. فقط نام غذای خود را به اشتراک بگذارید."
-    message_str += "در صورت گزارش دریافت چندین غذا در یک روز بن خواهید شد."
+    message_str += "\n\n.در صورت دریافت  گزارش تخلف بن خواهید شد."
+    message_str += "\n.کد را در بات به اشتراک نگذارید. فقط نام غذای خود را به اشتراک بگذارید."
+    message_str += "در صورت گزارش دریافت چندین غذا در یک روز بن خواهید شد.\n"
     bot.send_message(message.chat.id, message_str, reply_markup=keyboards.foodKeyboard.get_markup())
 
 
