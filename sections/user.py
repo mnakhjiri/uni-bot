@@ -145,9 +145,10 @@ def food(message):
 @check_if_ban
 def send_foods(message):
     try:
+        to_user = User.get(chat_id=message.chat.id)
         user_foods = list(
             FoodCode.select().where(FoodCode.time_created > datetime.utcnow() - timedelta(days=1),
-                                    to_user=message.chat.id).execute())
+                                    FoodCode.to_user == to_user).execute())
     except AttributeError:
         bot.send_message(message.chat.id, "غذایی در لیست امروز ثبت نشده است.")
         return
@@ -155,7 +156,7 @@ def send_foods(message):
         bot.send_message(message.chat.id, "شما نمی توانید بیشتر از یک کد فراموشی در روز بگیرید.")
         return
     foods = list(
-        FoodCode.get_or_none().where(FoodCode.time_created > datetime.utcnow() - timedelta(days=1), to_user=None))
+        FoodCode.select().where(FoodCode.time_created > datetime.utcnow() - timedelta(days=1), to_user=None).execute())
     if len(foods) == 0:
         bot.send_message(message.chat.id, "غذایی در لیست امروز ثبت نشده است.")
         return
