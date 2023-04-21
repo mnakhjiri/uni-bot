@@ -163,7 +163,7 @@ def send_foods(message):
         return
     sent = False
     for food_item in foods:
-        if food_item.to_user is not None:
+        if food_item.to_user is  None:
             bot.send_message(message.chat.id, f"{food_item.id} | {food_item.desc}",
                              reply_markup=keyboards.getFoodKeyboard.get_markup())
             sent = True
