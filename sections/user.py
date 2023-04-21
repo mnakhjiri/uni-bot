@@ -157,7 +157,7 @@ def send_foods(message):
     #     return
     foods = list(
         FoodCode.select().where(FoodCode.time_created > (datetime.utcnow() - timedelta(days=1)),
-                                FoodCode.to_user is not None).execute())
+                                FoodCode.to_user is None).execute())
     if len(foods) == 0:
         bot.send_message(message.chat.id, "غذایی در لیست امروز باقی نمانده است.")
         return
