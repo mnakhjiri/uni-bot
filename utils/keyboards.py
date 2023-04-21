@@ -96,6 +96,10 @@ class FoodKeyboard(BaseInlineKeyboard):
             if database.User.get(chat_id=message.chat.id).is_ban:
                 bot.send_message(message.chat.id, "حساب کاربری شما بن شده است.")
                 return
+            chat = settings.bot.get_chat(message.chat.id)
+            if chat.username is None:
+                bot.send_message(message.chat.id, "برای تبادل باید username داشته باشید.")
+                return
             bot.send_message(message.chat.id,
                              "لطفا نوع غذای خود را بفرستید - برای نمونه : قورمه سبزی کامل. برای انصراف /cancel ارسال نمایید.")
             database.Session.create_session(message.chat.id, UserSessionStates.WAITING_TO_SEND_FOOD_DESC)
