@@ -140,7 +140,7 @@ def create_poll(message):
 @check_if_ban
 def food(message):
     message_str = "تبادل کد فراموشی (آزمایشی)"
-    message_str += "\n مقررات: "
+    message_str += "\n مقررات: " +  "\n\n"
     message_str += "در صورت دریافت  گزارش تخلف بن خواهید شد." + "\n\n"
     message_str += "فقط نام غذای خود را به اشتراک بگذارید کد را در بات ارسال نکنید" + "\n\n"
     message_str += "در صورت گزارش دریافت چندین غذا در یک روز بن خواهید شد"+ "\n\n"
