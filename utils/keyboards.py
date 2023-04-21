@@ -88,7 +88,7 @@ class FoodKeyboard(BaseInlineKeyboard):
         if action == "sendFoods":
             sections.user.send_foods(message)
         if action == "shareFood":
-            bot.send_message(message.chat.id, "لطفا نوع غذای خود را بفرستید - برای نمونه : قورمه سبزی کامل")
+            bot.send_message(message.chat.id, "لطفا نوع غذای خود را بفرستید - برای نمونه : قورمه سبزی کامل. برای انصراف /cancel ارسال نمایید.")
             database.Session.create_session(message.chat.id, UserSessionStates.WAITING_TO_SEND_FOOD_DESC)
 
 
