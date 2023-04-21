@@ -3,7 +3,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 import settings
 from database import BlackListWord, User
-from keyboards import *
+from utils.keyboards import *
 
 bot = settings.bot
 
