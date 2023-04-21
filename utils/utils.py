@@ -60,7 +60,7 @@ def send_message_to_users(text, users):
                 break
         if can_send:
             try:
-                bot.send_message(user.chat_id, text, reply_markup=dontShowAlertsKeyboard)
+                bot.send_message(user.chat_id, text, reply_markup=dontShowAlertsKeyboard.get_markup())
             except Exception as e:
                 if "bot was blocked by the user" in str(e):
                     User.delete_instance(user)
