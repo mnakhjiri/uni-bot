@@ -156,8 +156,7 @@ def send_foods(message):
         bot.send_message(message.chat.id, "شما نمی توانید بیشتر از یک کد فراموشی در روز بگیرید.")
         return
     foods = list(
-        FoodCode.select().where(FoodCode.time_created > datetime.utcnow() - timedelta(days=1),
-                                FoodCode.to_user is None).execute())
+        FoodCode.select().where(FoodCode.time_created > datetime.utcnow() - timedelta(days=1)).execute())
     if len(foods) == 0:
         bot.send_message(message.chat.id, "غذایی در لیست امروز باقی نمانده است.")
         return
