@@ -3,7 +3,6 @@ from concurrent.futures import ThreadPoolExecutor
 
 import settings
 from database import BlackListWord, User
-from utils.keyboards import *
 
 bot = settings.bot
 
@@ -11,6 +10,7 @@ executor = ThreadPoolExecutor(5)
 
 
 def get_csv(message, url, mode=None):
+    from keyboards import homeworkKeyboard
     result = ""
     p = pd.read_csv(url)
     i = 1
