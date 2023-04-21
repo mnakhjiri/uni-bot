@@ -1,6 +1,5 @@
 import pandas as pd
 from concurrent.futures import ThreadPoolExecutor
-import sys
 import settings
 from database import BlackListWord, User
 
@@ -10,8 +9,7 @@ executor = ThreadPoolExecutor(5)
 
 
 def get_csv(message, url, mode=None):
-    sys.path.append("/utils")
-    from keyboards import homeworkKeyboard
+    from utils.keyboards import homeworkKeyboard
     result = ""
     p = pd.read_csv(url)
     i = 1
