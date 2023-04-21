@@ -194,6 +194,7 @@ def handle_poll(poll):
 
 
 @bot.message_handler(commands=["show_alerts"])
+@save_action(action=UserActions.SHOW_ALERTS)
 def show_alerts(message):
     user_config = UserCustomConfigs.get_or_none(user=User.get(chat_id=message.chat.id),
                                                 custom_config_mode=UserCustomConfigsEnum.DONT_SHOW_ALERTS.value)
