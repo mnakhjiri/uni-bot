@@ -135,8 +135,9 @@ class FoodCode(BaseModel):
             from_user_chat_id = FoodCode.get(id=food_code_id).from_user.chat_id
         else:
             return False
-        print("hi")
-        if FoodCode.get_or_none(id=food_code_id).to_user.chat_id == to_user_chat_id:
+        print(FoodCode.get_or_none(id=food_code_id).to_user.chat_id)
+        print(to_user_chat_id)
+        if FoodCode.get_or_none(id=food_code_id).to_user.chat_id == str(to_user_chat_id):
             return from_user_chat_id
         else:
             return False
