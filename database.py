@@ -1,7 +1,6 @@
 from peewee import *
 from datetime import datetime
 
-import bot
 import settings
 
 mysql_database = None
