@@ -87,7 +87,7 @@ def admin_handler(message):
 def super_user_handler(message):
     result = ""
     items = list(BotLog.select().where(BotLog.time > datetime.utcnow() - timedelta(minutes=20)).execute())
-    items2 = list(BotLog.select().distinct(BotLog.user).where(BotLog.time > datetime.utcnow() - timedelta(days=1)).execute())
+    items2 = list(BotLog.select().where(BotLog.time > datetime.utcnow() - timedelta(days=1)).distinct(BotLog.user).execute())
     for item in items:
         result += f"{item.user.name} {item.user.last_name} {item.action}  {item.time + timedelta(hours=3, minutes=30)}\n\n"
     if result == "":
