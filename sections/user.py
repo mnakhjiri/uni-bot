@@ -160,7 +160,9 @@ def send_foods(message):
         return
     if len(user_foods) > 3:
         if str(message.chat.id) != str(settings.super_user):
-            User.get(chat_id=message.chat.id).update(is_ban=True).execute()
+            user = User.get(chat_id=message.chat.id)
+            user.is_ban = True
+            user.save()
             bot.send_message(message.chat.id, "به دلیل دریافت تعداد بیش از حد کد فراموشی حساب شما بن شد.")
             return
     foods = list(
