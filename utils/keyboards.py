@@ -75,7 +75,7 @@ class GetFoodKeyboard(BaseInlineKeyboard):
     def do_action(self, action: str, message):
         if action == "getFood":
             print(message)
-            food_id = message.text.split("|").strip()[0]
+            food_id = message.text.split("|")[0].strip()
             result = database.FoodCode.get_food_code(message.chat.id, food_id)
             if not result:
                 bot.send_message(message.chat.id, "کد مورد نظر ارسال نشد. احتمالا کسی قبل شما آن را گرفته است.")
