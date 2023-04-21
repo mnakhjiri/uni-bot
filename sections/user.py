@@ -135,7 +135,7 @@ def create_poll(message):
 
 
 @bot.poll_answer_handler()
-@save_action(action=UserActions.ANSWER_POLL)
+# @save_action(action=UserActions.ANSWER_POLL)
 def handle_poll(poll):
     courses = settings.poll_answer_options
     for i in range(len(courses)):
