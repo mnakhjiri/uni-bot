@@ -145,18 +145,18 @@ def food(message):
 @check_if_ban
 def send_foods(message):
     user_foods = list(
-        FoodCode.get().where(FoodCode.time_created > datetime.utcnow() - timedelta(days=1), to_user=message.chat.id))
+        FoodCode.get_or_none().where(FoodCode.time_created > datetime.utcnow() - timedelta(days=1),
+                                     to_user=message.chat.id))
     if len(user_foods) > 0:
         bot.send_message(message.chat.id, "شما نمی توانید بیشتر از یک کد فراموشی در روز بگیرید.")
         return
-    foods = list(FoodCode.get().where(FoodCode.time_created > datetime.utcnow() - timedelta(days=1), to_user=None))
+    foods = list(FoodCode.get_or_none().where(FoodCode.time_created > datetime.utcnow() - timedelta(days=1), to_user=None))
     if len(foods) == 0:
         bot.send_message(message.chat.id, "غذایی در لیست امروز ثبت نشده است.")
         return
     for food_item in foods:
         bot.send_message(message.chat.id, f"{food_item.id} | {food_item.desc}",
                          reply_markup=keyboards.getFoodKeyboard.get_markup())
-
 
 
 @bot.poll_answer_handler()

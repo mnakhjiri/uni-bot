@@ -130,12 +130,12 @@ class FoodCode(BaseModel):
     def get_food_code(cls, to_user_chat_id, food_code_id):
         to_user = User.get(chat_id=to_user_chat_id)
         from_user_chat_id = None
-        if FoodCode.get(id=food_code_id).to_user is None:
-            FoodCode.get(id=food_code_id).update(to_user=to_user, time_traded=datetime.utcnow())
+        if FoodCode.get_or_none(id=food_code_id).to_user is None:
+            FoodCode.get_or_none(id=food_code_id).update(to_user=to_user, time_traded=datetime.utcnow())
             from_user_chat_id = FoodCode.get(id=food_code_id).from_user.chat_id
         else:
             return False
-        if FoodCode.get(id=food_code_id).to_user.chat_id == to_user_chat_id:
+        if FoodCode.get_or_none(id=food_code_id).to_user.chat_id == to_user_chat_id:
             return from_user_chat_id
         else:
             return False
