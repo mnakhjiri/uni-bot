@@ -25,6 +25,9 @@ def handling_message(message):
         elif user_session.waiting_action == UserSessionStates.WAITING_TO_SEND_FOOD_DESC:
             FoodCode.add_food_code(message.chat.id, message.text)
             bot.send_message(message.chat.id, "با موفقیت اضافه شدید.")
+        elif user_session.waiting_action == UserSessionStates.WAITING_TO_SEND_FOOD_DESC_WITHOUT_USERNAME:
+            FoodCode.add_food_code(message.chat.id, message.text)
+            bot.send_message(message.chat.id, "با موفقیت اضافه شدید.")
 
         Session.delete_instance(user_session)
 

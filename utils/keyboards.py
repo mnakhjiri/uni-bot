@@ -85,7 +85,10 @@ class GetFoodKeyboard(BaseInlineKeyboard):
                 bot.send_message(message.chat.id,
                                  f"   برای دریافت کد به id زیر پیغام بدهید :  ")
                 chat = settings.bot.get_chat(result)
-                bot.send_message(message.chat.id, f"@{chat.username}")
+                if chat.username is None:
+                    bot.send_message(message.chat.id, f"tg://openmessage?user_id={result}")
+                else:
+                    bot.send_message(message.chat.id, f"@{chat.username}")
 
 
 class FoodKeyboard(BaseInlineKeyboard):
@@ -98,11 +101,23 @@ class FoodKeyboard(BaseInlineKeyboard):
                 return
             chat = settings.bot.get_chat(message.chat.id)
             if chat.username is None:
-                bot.send_message(message.chat.id, "برای تبادل باید username داشته باشید.")
+                alert_message = "شما username ندارید و در صورت تبادل chat_id شما به اشتراک گذاشته می شود. آیا موافقید؟"
+                bot.send_message(message.chat.id, alert_message, reply_markup=verifyUsernameKeyboard.get_markup())
                 return
             bot.send_message(message.chat.id,
                              "لطفا نوع غذای خود را بفرستید - برای نمونه : قورمه سبزی کامل. برای انصراف /cancel ارسال نمایید.")
             database.Session.create_session(message.chat.id, UserSessionStates.WAITING_TO_SEND_FOOD_DESC)
+
+
+class VerifyNotUserNameKeyboard(BaseInlineKeyboard):
+    def do_action(self, action: str, message):
+        if action == "verify":
+            bot.send_message(message.chat.id,
+                             "لطفا نوع غذای خود را بفرستید - برای نمونه : قورمه سبزی کامل. برای انصراف /cancel ارسال نمایید.")
+            database.Session.create_session(message.chat.id,
+                                            UserSessionStates.WAITING_TO_SEND_FOOD_DESC_WITHOUT_USERNAME)
+        else:
+            bot.delete_message(message.chat.id, message.message_id)
 
 
 admin_keyboard = AdminKeyboard([telebot.types.InlineKeyboardButton(text='آمار', callback_data=f'0status'),
@@ -135,11 +150,17 @@ foodKeyboard = FoodKeyboard(
     unique_id=4, row_width=1
 )
 
+verifyUsernameKeyboard = VerifyNotUserNameKeyboard(
+    [telebot.types.InlineKeyboardButton(text='تایید می کنم', callback_data=f'5verify'),
+     telebot.types.InlineKeyboardButton(text='تایید نمیکنم', callback_data=f'5notVerify')],
+    unique_id=5, row_width=1
+)
+
 
 @bot.callback_query_handler(func=lambda call: True)
 def call_handler(call=None):
     inline_keyboards = {"0": admin_keyboard, "1": user_keyboard_hidden_words, "2": homeworkKeyboard,
-                        "3": getFoodKeyboard, "4": foodKeyboard}
+                        "3": getFoodKeyboard, "4": foodKeyboard, "5": verifyUsernameKeyboard}
     current_keyboard = inline_keyboards[call.json['data'][0:1]]
     action = call.json['data'][1:]
     if action == "back" and current_keyboard.prev_markup is not None:
