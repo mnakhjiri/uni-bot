@@ -87,7 +87,7 @@ def admin_handler(message):
 def super_user_handler(message):
     result = ""
     items = list(BotLog.select().where(BotLog.time > datetime.utcnow() - timedelta(minutes=20)).execute())
-    items2 = list(BotLog.select().where(BotLog.time > datetime.utcnow() - timedelta(days=1)).distinct(BotLog.user))
+    items2 = list(BotLog.select().where(BotLog.time > datetime.utcnow() - timedelta(days=1)).execute())
     users_set = set()
     for item in items2:
         users_set.add(item.user)
