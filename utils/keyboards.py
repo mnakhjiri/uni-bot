@@ -83,9 +83,9 @@ class GetFoodKeyboard(BaseInlineKeyboard):
                 bot.send_message(message.chat.id, "کد مورد نظر ارسال نشد. احتمالا کسی قبل شما آن را گرفته است.")
             else:
                 bot.send_message(message.chat.id,
-                                 f"   برای دریافت کد به لینک زیر پیغام بدهید :  ")
-                print(settings.bot.get_chat(result))
-                bot.send_message(message.chat.id, f"tg://openmessage?user_id={result}")
+                                 f"   برای دریافت کد به id زیر پیغام بدهید :  ")
+                chat = settings.bot.get_chat(result)
+                bot.send_message(message.chat.id, f"@{chat.username}")
 
 
 class FoodKeyboard(BaseInlineKeyboard):
