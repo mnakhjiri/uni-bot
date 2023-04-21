@@ -84,6 +84,7 @@ class GetFoodKeyboard(BaseInlineKeyboard):
             else:
                 bot.send_message(message.chat.id,
                                  f"   برای دریافت کد به لینک زیر پیغام بدهید :  ")
+                print(settings.bot.get_chat(result))
                 bot.send_message(message.chat.id, f"tg://openmessage?user_id={result}")
 
 
