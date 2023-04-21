@@ -85,13 +85,13 @@ user_keyboard_hidden_words = UserKeyboardHiddenWords(
 
 homeworkKeyboard = HomeworkKeyboard(
     [telebot.types.InlineKeyboardButton(text='انجام دادم', callback_data=f'2done')],
-    unique_id=2, row_width=4
+    unique_id=2, row_width=1
 )
 
 
 @bot.callback_query_handler(func=lambda call: True)
 def call_handler(call=None):
-    inline_keyboards = {"0": admin_keyboard, "1": user_keyboard_hidden_words}
+    inline_keyboards = {"0": admin_keyboard, "1": user_keyboard_hidden_words, "2": homeworkKeyboard}
     current_keyboard = inline_keyboards[call.json['data'][0:1]]
     action = call.json['data'][1:]
     if action == "back" and current_keyboard.prev_markup is not None:
