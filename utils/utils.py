@@ -23,7 +23,10 @@ def get_csv(message, url, mode=None):
             for j in range(3):
                 out = p.iloc[i, j]
                 if isinstance(out, str):
-                    row += out + " | "
+                    if j != 2:
+                        row += out + " | "
+                    else:
+                        row += out
             for word in black_list_words:
                 if word in row:
                     not_show = True
