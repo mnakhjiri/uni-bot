@@ -148,9 +148,14 @@ class FoodCode(BaseModel):
             return False
 
 
+class UserCustomConfigs(BaseModel):
+    user = ForeignKeyField(User)
+    custom_config_mode = IntegerField()
+
+
 def create_tables():
     with database:
-        database.create_tables([User, BlackListWord, Session, BotLog, FoodCode])
+        database.create_tables([User, BlackListWord, Session, BotLog, FoodCode, UserCustomConfigs])
 
 
 create_tables()

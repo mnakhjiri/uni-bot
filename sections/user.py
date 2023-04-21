@@ -5,6 +5,7 @@ from utils import utils
 from utils.decorators import *
 from database import *
 from utils import keyboards
+from utils.enums import *
 
 bot = settings.bot
 
@@ -190,3 +191,12 @@ def handle_poll(poll):
         else:
             BlackListWord.remove_from_black_list(courses[i], poll.user.id)
     bot.send_message(poll.user.id, "فیلتر مورد نظر با موفقیت اعمال شد")
+
+
+@bot.message_handler(commands=["show_alerts"])
+def show_alerts(message):
+    user_config = UserCustomConfigs.get_or_none(user=User.get(chat_id=message.chat.id),
+                                                custom_config_mode=UserCustomConfigsEnum.DONT_SHOW_ALERTS.value)
+    if user_config is not None:
+        UserCustomConfigs.delete_instance(user_config)
+    bot.send_message(message.chat.id, "اطلاعیه ها از این به بعد نمایش داده می شوند.")

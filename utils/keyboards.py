@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 import telebot
 
 import sections.user
-from utils.enums import AdminSessionStates, UserSessionStates
+from utils.enums import AdminSessionStates, UserSessionStates, UserCustomConfigsEnum
 import database
 import settings
 from sections import admin
@@ -131,6 +131,16 @@ class VerifyNotUserNameKeyboard(BaseInlineKeyboard):
             bot.delete_message(message.chat.id, message.message_id)
 
 
+class DontShowAlertsKeyboard(BaseInlineKeyboard):
+    def do_action(self, action: str, message):
+        if action == "hideAlerts":
+            user = database.User.get(chat_id=message.chat.id)
+            database.UserCustomConfigs.get_or_create(user=user,
+                                                     custom_config_mode=UserCustomConfigsEnum.DONT_SHOW_ALERTS.value)
+            bot.send_message(message.chat.id,
+                             "اطلاعیه ها از این به بعد نمایش داده نمی شوند. برای برگشت از /show_alerts استفاده کنید.")
+
+
 admin_keyboard = AdminKeyboard([telebot.types.InlineKeyboardButton(text='آمار', callback_data=f'0status'),
                                 telebot.types.InlineKeyboardButton(text='کاربران', callback_data=f'0getUsers'),
                                 telebot.types.InlineKeyboardButton(text='ارسال اطلاعیه', callback_data=f'0alert'),
@@ -167,11 +177,17 @@ verifyUsernameKeyboard = VerifyNotUserNameKeyboard(
     unique_id=5, row_width=1
 )
 
+dontShowAlertsKeyboard = DontShowAlertsKeyboard(
+    [telebot.types.InlineKeyboardButton(text='عدم نمایش اطلاعیه ها', callback_data=f'6hideAlerts')],
+    unique_id=6, row_width=1
+)
+
 
 @bot.callback_query_handler(func=lambda call: True)
 def call_handler(call=None):
     inline_keyboards = {"0": admin_keyboard, "1": user_keyboard_hidden_words, "2": homeworkKeyboard,
-                        "3": getFoodKeyboard, "4": foodKeyboard, "5": verifyUsernameKeyboard}
+                        "3": getFoodKeyboard, "4": foodKeyboard, "5": verifyUsernameKeyboard,
+                        "6": dontShowAlertsKeyboard}
     current_keyboard = inline_keyboards[call.json['data'][0:1]]
     action = call.json['data'][1:]
     if action == "back" and current_keyboard.prev_markup is not None:

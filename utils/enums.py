@@ -36,3 +36,8 @@ class UserActions(BaseEnum):
     SEND_EXAMS = "sendExams"
     SEND_HW = "sendHomework"
     FOOD = "food"
+    SHOW_ALERTS = "SHOW_ALERTS"
+
+
+class UserCustomConfigsEnum(Enum):
+    DONT_SHOW_ALERTS = 0
