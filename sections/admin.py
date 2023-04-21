@@ -93,3 +93,15 @@ def super_user_handler(message):
         bot.send_message(message.chat.id, "nothing to show")
     else:
         bot.send_message(message.chat.id, result)
+
+
+@bot.message_handler(commands=['unban'])
+@super_user
+def un_ban(message):
+    chat_id = message.text.replace("/unban", "")
+    if id == "":
+        bot.send_message(message.chat.id, "لظفا پیام خودت به صورت فرمت زیر بفرستید:")
+        bot.send_message(message.chat.id, f"/unban \nمحتوای پیام")
+        return
+    User.get(chat_id=chat_id).update(is_ban = False).execute()
+    bot.send_message(message.chat.id, "حساب مورد نظر از مسدودیت خارج شد.")
