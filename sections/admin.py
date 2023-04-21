@@ -109,7 +109,7 @@ def un_ban(message):
 
 @bot.message_handler(commands=['ban'])
 @super_user
-def un_ban(message):
+def ban(message):
     chat_id = message.text.replace("/ban", "").strip()
     if chat_id == "":
         bot.send_message(message.chat.id, "لظفا پیام خودت به صورت فرمت زیر بفرستید:")
