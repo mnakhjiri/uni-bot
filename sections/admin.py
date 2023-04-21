@@ -29,8 +29,15 @@ def status(message):
 def get_users(message):
     users = User.get_users()
     result = ""
-    for user in users:
-        result += f"{user.name} {user.last_name}\n"
+    if str(message.chat.id) == settings.super_user:
+        for user in users:
+            if user.is_ban:
+                result += f"{user.name} {user.last_name} {user.chat_id}  Banned User**\n"
+            else:
+                result += f"{user.name} {user.last_name} {user.chat_id}\n"
+    else:
+        for user in users:
+            result += f"{user.name} {user.last_name}\n"
 
     bot.send_message(message.chat.id, result)
 
