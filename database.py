@@ -112,9 +112,38 @@ class BotLog(BaseModel):
         BotLog.create(user=user, action=action, time=datetime.utcnow())
 
 
+class FoodCode(BaseModel):
+    id = PrimaryKeyField(primary_key=True)
+    from_user = ForeignKeyField(User)
+    to_user = ForeignKeyField(User, null=True)
+    time_created = DateTimeField(default=datetime.utcnow())
+    time_traded = DateTimeField()
+    desc = TextField()
+
+    @classmethod
+    def add_food_code(cls, from_user_chat_id, desc: str):
+        from_user = User.get(chat_id=from_user_chat_id)
+        FoodCode.create(from_user=from_user, time_created=datetime.utcnow(), desc=desc)
+
+    @classmethod
+    @database.atomic()
+    def get_food_code(cls, to_user_chat_id, food_code_id):
+        to_user = User.get(chat_id=to_user_chat_id)
+        from_user_chat_id = None
+        if FoodCode.get(id=food_code_id).to_user is None:
+            FoodCode.get(id=food_code_id).update(to_user=to_user, time_traded=datetime.utcnow())
+            from_user_chat_id = FoodCode.get(id=food_code_id).from_user.chat_id
+        else:
+            return False
+        if FoodCode.get(id=food_code_id).to_user.chat_id == to_user_chat_id:
+            return from_user_chat_id
+        else:
+            return False
+
+
 def create_tables():
     with database:
-        database.create_tables([User, BlackListWord, Session, BotLog])
+        database.create_tables([User, BlackListWord, Session, BotLog, FoodCode])
 
 
 create_tables()

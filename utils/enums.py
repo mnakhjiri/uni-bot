@@ -15,6 +15,7 @@ class UserSessionStates(BaseEnum):
     WAITING_TO_SEND_FEEDBACK = "userWaitingToSendFeedBack"
     WAITING_TO_SEND_SHOW_WORD = "WAITING_TO_SEND_SHOW_WORD"
     WAITING_TO_SEND_DONT_SHOW_WORD = "WAITING_TO_SEND_DONT_SHOW_WORD"
+    WAITING_TO_SEND_FOOD_DESC = "WAITING_TO_SEND_FOOD_DESC"
 
 
 class UserActions(BaseEnum):
@@ -33,3 +34,4 @@ class UserActions(BaseEnum):
     SEND_ID = "sendId"
     SEND_EXAMS = "sendExams"
     SEND_HW = "sendHomework"
+    FOOD = "food"

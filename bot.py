@@ -22,6 +22,8 @@ def handling_message(message):
             sections.user.show_word_v2(message)
         elif user_session.waiting_action == UserSessionStates.WAITING_TO_SEND_DONT_SHOW_WORD:
             sections.user.dont_show_word_v2(message)
+        elif user_session.waiting_action == UserSessionStates.WAITING_TO_SEND_FOOD_DESC:
+            FoodCode.add_food_code(message.chat.id, message.text)
 
         Session.delete_instance(user_session)
 

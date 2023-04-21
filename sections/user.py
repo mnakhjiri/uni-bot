@@ -1,4 +1,5 @@
 import threading
+from datetime import timedelta
 
 from utils import utils
 from utils.decorators import *
@@ -132,6 +133,30 @@ def create_poll(message):
     if answer != "":
         answer = "به دلیل محدودیت تلگرام در ارسال poll موارد زیر ارسال نشد. لطفا در  صورت تمایل در بخش فیلتر کردن گزارش ها آن را تغییر بدهید." + "\n\n" + answer
         bot.send_message(message.chat.id, answer)
+
+
+@save_action(action=UserActions.FOOD)
+@bot.message_handler(commands=["food"])
+@check_if_ban
+def food(message):
+    bot.send_message(message.chat.id, "تبادل کد فراموشی", reply_markup=keyboards.foodKeyboard.get_markup())
+
+
+@check_if_ban
+def send_foods(message):
+    user_foods = list(
+        FoodCode.get().where(FoodCode.time_created > datetime.utcnow() - timedelta(days=1), to_user=message.chat.id))
+    if len(user_foods) > 0:
+        bot.send_message(message.chat.id, "شما نمی توانید بیشتر از یک کد فراموشی در روز بگیرید.")
+        return
+    foods = list(FoodCode.get().where(FoodCode.time_created > datetime.utcnow() - timedelta(days=1), to_user=None))
+    if len(foods) == 0:
+        bot.send_message(message.chat.id, "غذایی در لیست امروز ثبت نشده است.")
+        return
+    for food_item in foods:
+        bot.send_message(message.chat.id, f"{food_item.id} | {food_item.desc}",
+                         reply_markup=keyboards.getFoodKeyboard.get_markup())
+
 
 
 @bot.poll_answer_handler()

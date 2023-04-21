@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 import telebot
 
 import sections.user
@@ -69,6 +71,27 @@ class HomeworkKeyboard(BaseInlineKeyboard):
             bot.delete_message(message.chat.id, message.message_id)
 
 
+class GetFoodKeyboard(BaseInlineKeyboard):
+    def do_action(self, action: str, message):
+        if action == "getFood":
+            food_id = message.text.split("|").strip()[0]
+            result = database.FoodCode.get_food_code(message.chat.id, food_id)
+            if not result:
+                bot.send_message(message.chat.id, "کد مورد نظر ارسال نشد. احتمالا کسی قبل شما آن را گرفته است.")
+            else:
+                bot.send_message(message.chat.id,
+                                 f"  tg://openmessage?user_id={result} برای دریافت کد به لینک رو برو پیام بدید :  ")
+
+
+class FoodKeyboard(BaseInlineKeyboard):
+    def do_action(self, action: str, message):
+        if action == "sendFoods":
+            sections.user.send_foods(message)
+        if action == "shareFood":
+            bot.send_message(message.chat.id, "لطفا نوع غذای خود را بفرستید - برای نمونه : قورمه سبزی کامل")
+            database.Session.create_session(message.chat.id, UserSessionStates.WAITING_TO_SEND_FOOD_DESC)
+
+
 admin_keyboard = AdminKeyboard([telebot.types.InlineKeyboardButton(text='آمار', callback_data=f'0status'),
                                 telebot.types.InlineKeyboardButton(text='کاربران', callback_data=f'0getUsers'),
                                 telebot.types.InlineKeyboardButton(text='ارسال اطلاعیه', callback_data=f'0alert'),
@@ -88,10 +111,22 @@ homeworkKeyboard = HomeworkKeyboard(
     unique_id=2, row_width=1
 )
 
+getFoodKeyboard = GetFoodKeyboard(
+    [telebot.types.InlineKeyboardButton(text='دریافت غذا', callback_data=f'3getFood')],
+    unique_id=3, row_width=1
+)
+
+foodKeyboard = FoodKeyboard(
+    [telebot.types.InlineKeyboardButton(text='مشاهده لیست غذا های امروز', callback_data=f'4sendFoods'),
+     telebot.types.InlineKeyboardButton(text='به اشتراک گذاشتن کد فراموشی', callback_data=f'4shareFood')],
+    unique_id=4, row_width=1
+)
+
 
 @bot.callback_query_handler(func=lambda call: True)
 def call_handler(call=None):
-    inline_keyboards = {"0": admin_keyboard, "1": user_keyboard_hidden_words, "2": homeworkKeyboard}
+    inline_keyboards = {"0": admin_keyboard, "1": user_keyboard_hidden_words, "2": homeworkKeyboard,
+                        "3": getFoodKeyboard, "4": foodKeyboard}
     current_keyboard = inline_keyboards[call.json['data'][0:1]]
     action = call.json['data'][1:]
     if action == "back" and current_keyboard.prev_markup is not None:

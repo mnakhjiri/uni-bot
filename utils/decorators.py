@@ -23,6 +23,17 @@ def admin(func):
     return wrapper_func
 
 
+def check_if_ban(func):
+    def wrapper_func(message):
+        user = User.get(chat_id=message.chat.id)
+        if not user.is_ban:
+            func(message)
+        else:
+            settings.bot.send_message(message.chat.id, "این امکان برای شما مسدود است.")
+
+    return wrapper_func
+
+
 def super_user(func):
     def wrapper_func(message):
         super_user_admin = settings.super_user
@@ -41,5 +52,7 @@ def save_action(action=None):
             BotLog.add_log(*args)
             # executor.submit(BotLog.add_log, args)
             return func(message)
+
         return wrapper
+
     return wrapper_function
