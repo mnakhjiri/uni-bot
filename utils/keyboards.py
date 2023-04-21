@@ -62,6 +62,13 @@ class UserKeyboardHiddenWords(BaseInlineKeyboard):
             sections.user.reset_blacklist_v2(message)
 
 
+class HomeworkKeyboard(BaseInlineKeyboard):
+    def do_action(self, action: str, message):
+        if action == "done":
+            database.BlackListWord.add_to_black_list(message.text.split("|")[0], message.chat.id)
+            bot.delete_message(message.chat.id, message.message_id)
+
+
 admin_keyboard = AdminKeyboard([telebot.types.InlineKeyboardButton(text='آمار', callback_data=f'0status'),
                                 telebot.types.InlineKeyboardButton(text='کاربران', callback_data=f'0getUsers'),
                                 telebot.types.InlineKeyboardButton(text='ارسال اطلاعیه', callback_data=f'0alert'),
@@ -75,6 +82,11 @@ user_keyboard_hidden_words = UserKeyboardHiddenWords(
      telebot.types.InlineKeyboardButton(text='حذف عبارت از فیلتر عدم نمایش', callback_data=f'1show'),
      telebot.types.InlineKeyboardButton(text='ریست کردن کلمات در فیلتر عدم نمایش', callback_data=f'1reset')],
     unique_id=1, row_width=4)
+
+homeworkKeyboard = HomeworkKeyboard(
+    [telebot.types.InlineKeyboardButton(text='انجام دادم', callback_data=f'2done')],
+    unique_id=2, row_width=4
+)
 
 
 @bot.callback_query_handler(func=lambda call: True)

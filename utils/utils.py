@@ -3,13 +3,14 @@ from concurrent.futures import ThreadPoolExecutor
 
 import settings
 from database import BlackListWord, User
+from keyboards import *
 
 bot = settings.bot
 
 executor = ThreadPoolExecutor(5)
 
 
-def get_csv(message, url):
+def get_csv(message, url, mode=None):
     result = ""
     p = pd.read_csv(url)
     i = 1
@@ -23,19 +24,23 @@ def get_csv(message, url):
             for j in range(3):
                 out = p.iloc[i, j]
                 if isinstance(out, str):
-                    row += out + " "
+                    row += out + " | "
             for word in black_list_words:
                 if word in row:
                     not_show = True
                     break
             if not not_show:
-                result += f"{row}\n\n"
+                if mode == "hw":
+                    bot.send_message(message.chat.id, row, reply_markup=homeworkKeyboard.get_markup())
+                else:
+                    result += f"{row}\n\n"
             i += 1
     except IndexError:
         pass
     except Exception as e:
         print(str(e))
-    bot.send_message(message.chat.id, result)
+    if mode != "hw":
+        bot.send_message(message.chat.id, result)
 
 
 def send_message_to_users(text, users):

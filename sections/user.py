@@ -19,7 +19,7 @@ def greet(message):
 @save_user_to_db
 @save_action(action=UserActions.SEND_HW)
 def homework(message):
-    threading.Thread(target=utils.get_csv, args=(message, settings.hw_url)).start()
+    threading.Thread(target=utils.get_csv, args=(message, settings.hw_url, "hw")).start()
 
 
 @bot.message_handler(commands=['exams'])
