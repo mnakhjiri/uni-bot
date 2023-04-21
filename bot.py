@@ -24,6 +24,7 @@ def handling_message(message):
             sections.user.dont_show_word_v2(message)
         elif user_session.waiting_action == UserSessionStates.WAITING_TO_SEND_FOOD_DESC:
             FoodCode.add_food_code(message.chat.id, message.text)
+            bot.send_message(message.chat.id, "با موفقیت اضافه شدید.")
 
         Session.delete_instance(user_session)
 

@@ -163,12 +163,13 @@ def send_foods(message):
         return
     sent = False
     for food_item in foods:
-        if food_item.to_user is  None:
+        if food_item.to_user is None:
             bot.send_message(message.chat.id, f"{food_item.id} | {food_item.desc}",
                              reply_markup=keyboards.getFoodKeyboard.get_markup())
             sent = True
     if not sent:
         bot.send_message(message.chat.id, "تمامی غذا ها تبادل شده اند")
+
 
 @bot.poll_answer_handler()
 # @save_action(action=UserActions.ANSWER_POLL)
