@@ -150,6 +150,7 @@ def send_foods(message):
                                          to_user=message.chat.id))
     except AttributeError:
         bot.send_message(message.chat.id, "غذایی در لیست امروز ثبت نشده است.")
+        return
     if len(user_foods) > 0:
         bot.send_message(message.chat.id, "شما نمی توانید بیشتر از یک کد فراموشی در روز بگیرید.")
         return
