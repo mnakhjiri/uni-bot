@@ -142,8 +142,8 @@ def food(message):
     message_str = "تبادل کد فراموشی (آزمایشی)"
     message_str += "\n مقررات: "
     message_str += "\n\nدر صورت دریافت  گزارش تخلف بن خواهید شد."
-    message_str += "\nکد را در بات به اشتراک نگذارید. فقط نام غذای خود را به اشتراک بگذارید."
-    message_str += ".در صورت گزارش دریافت چندین غذا در یک روز بن خواهید شد\n"
+    message_str += "فقط نام غذای خود را به اشتراک بگذارید. کد را در بات ارسال نکنید. \n"
+    message_str += ".در صورت گزارش دریافت چندین غذا در یک روز بن خواهید شد \n"
     bot.send_message(message.chat.id, message_str, reply_markup=keyboards.foodKeyboard.get_markup())
 
 
