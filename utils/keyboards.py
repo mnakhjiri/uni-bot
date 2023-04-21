@@ -74,6 +74,9 @@ class HomeworkKeyboard(BaseInlineKeyboard):
 class GetFoodKeyboard(BaseInlineKeyboard):
     def do_action(self, action: str, message):
         if action == "getFood":
+            if database.User.get(chat_id=message.chat.id).is_ban:
+                bot.send_message(message.chat.id, "حساب کاربری شما بن شده است.")
+                return
             food_id = message.text.split("|")[0].strip()
             result = database.FoodCode.get_food_code(message.chat.id, food_id)
             if not result:
@@ -89,7 +92,11 @@ class FoodKeyboard(BaseInlineKeyboard):
         if action == "sendFoods":
             sections.user.send_foods(message)
         if action == "shareFood":
-            bot.send_message(message.chat.id, "لطفا نوع غذای خود را بفرستید - برای نمونه : قورمه سبزی کامل. برای انصراف /cancel ارسال نمایید.")
+            if database.User.get(chat_id=message.chat.id).is_ban:
+                bot.send_message(message.chat.id, "حساب کاربری شما بن شده است.")
+                return
+            bot.send_message(message.chat.id,
+                             "لطفا نوع غذای خود را بفرستید - برای نمونه : قورمه سبزی کامل. برای انصراف /cancel ارسال نمایید.")
             database.Session.create_session(message.chat.id, UserSessionStates.WAITING_TO_SEND_FOOD_DESC)
 
 

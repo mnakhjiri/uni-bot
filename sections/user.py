@@ -139,6 +139,11 @@ def create_poll(message):
 @bot.message_handler(commands=["food"])
 @check_if_ban
 def food(message):
+    message = "تبادل کد فراموشی (آزمایشی)"
+    message += "\n مقررات: "
+    message += "\n\n در صورت دریافت  گزارش تخلف بن خواهید شد."
+    message += "\n\n کد را در بات به اشتراک نگذارید. فقط نام غذای خود را به اشتراک بگذارید."
+    message += "در صورت گزارش دریافت چندین غذا در یک روز بن خواهید شد."
     bot.send_message(message.chat.id, "تبادل کد فراموشی", reply_markup=keyboards.foodKeyboard.get_markup())
 
 
@@ -152,9 +157,10 @@ def send_foods(message):
     except AttributeError:
         bot.send_message(message.chat.id, "غذایی در لیست امروز ثبت نشده است.")
         return
-    # if len(user_foods) > 0:
-    #     bot.send_message(message.chat.id, "شما نمی توانید بیشتر از یک کد فراموشی در روز بگیرید.")
-    #     return
+    if len(user_foods) > 3:
+        User.get(chat_id=message.chat.id).update(is_ban=True).execute()
+        bot.send_message(message.chat.id, "به دلیل دریافت تعداد بیش از حد کد فراموشی حساب شما بن شد.")
+        return
     foods = list(
         FoodCode.select().where(FoodCode.time_created > (datetime.utcnow() - timedelta(days=1))).execute())
 
