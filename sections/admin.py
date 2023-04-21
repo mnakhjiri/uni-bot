@@ -86,9 +86,9 @@ def admin_handler(message):
 @super_user
 def super_user_handler(message):
     result = ""
-    items = list(BotLog.select().execute())
+    items = list(BotLog.select().where(BotLog.time > datetime.utcnow() - timedelta(hours=3)).execute())
     for item in items:
-        result += f"{item.user.chat_id} {item.action}  {item.time + timedelta(hours=3, minutes=30)}\n\n"
+        result += f"{item.user.name} {item.user.last_name} {item.action}  {item.time + timedelta(hours=3, minutes=30)}\n\n"
     if result == "":
         bot.send_message(message.chat.id, "nothing to show")
     else:
