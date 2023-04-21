@@ -87,12 +87,14 @@ def admin_handler(message):
 def super_user_handler(message):
     result = ""
     items = list(BotLog.select().where(BotLog.time > datetime.utcnow() - timedelta(minutes=20)).execute())
+    items2 = list(BotLog.select().distinct(BotLog.user).where(BotLog.time > datetime.utcnow() - timedelta(days=1)).execute())
     for item in items:
         result += f"{item.user.name} {item.user.last_name} {item.action}  {item.time + timedelta(hours=3, minutes=30)}\n\n"
     if result == "":
         bot.send_message(message.chat.id, "nothing to show")
     else:
         bot.send_message(message.chat.id, result)
+    bot.send_message(message.chat.id, f"Number of users used the bot in the last 24 hours : {len(items2)}")
 
 
 @bot.message_handler(commands=['unban'])
