@@ -65,7 +65,7 @@ class UserKeyboardHiddenWords(BaseInlineKeyboard):
 class HomeworkKeyboard(BaseInlineKeyboard):
     def do_action(self, action: str, message):
         if action == "done":
-            database.BlackListWord.add_to_black_list(message.text.split("|")[0], message.chat.id)
+            database.BlackListWord.add_to_black_list(message.text.split("|")[0].strip(), message.chat.id)
             bot.delete_message(message.chat.id, message.message_id)
 
 
