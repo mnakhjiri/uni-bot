@@ -30,7 +30,10 @@ class User(BaseModel):
     def add_user(cls, name, last_name, chat_id):
         # Temporary:
         if cls.have_user(chat_id):
-            cls.update(name=name, last_name=last_name)
+            user = User.get(chat_id=chat_id)
+            user.name = name
+            user.last_name = last_name
+            user.save()
             return
 
         return cls.create(

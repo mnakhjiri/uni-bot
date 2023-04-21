@@ -103,7 +103,9 @@ def un_ban(message):
         bot.send_message(message.chat.id, "لظفا پیام خودت به صورت فرمت زیر بفرستید:")
         bot.send_message(message.chat.id, f"/unban \nمحتوای پیام")
         return
-    User.get(chat_id=chat_id).update(is_ban=False).execute()
+    user = User.get(chat_id=chat_id)
+    user.is_ban = False
+    user.save()
     bot.send_message(message.chat.id, "حساب مورد نظر از مسدودیت خارج شد.")
 
 
@@ -115,5 +117,7 @@ def ban(message):
         bot.send_message(message.chat.id, "لظفا پیام خودت به صورت فرمت زیر بفرستید:")
         bot.send_message(message.chat.id, f"/ban \nمحتوای پیام")
         return
-    User.get(chat_id=chat_id).update(is_ban=True).execute()
+    user = User.get(chat_id=chat_id)
+    user.is_ban = True
+    user.save()
     bot.send_message(message.chat.id, "حساب مورد نظر مسدود شد.")
