@@ -74,6 +74,7 @@ class HomeworkKeyboard(BaseInlineKeyboard):
 class GetFoodKeyboard(BaseInlineKeyboard):
     def do_action(self, action: str, message):
         if action == "getFood":
+            print(message)
             food_id = message.text.split("|").strip()[0]
             result = database.FoodCode.get_food_code(message.chat.id, food_id)
             if not result:
