@@ -135,15 +135,15 @@ def create_poll(message):
         bot.send_message(message.chat.id, answer)
 
 
-@save_action(action=UserActions.FOOD)
 @bot.message_handler(commands=["food"])
+@save_action(action=UserActions.FOOD)
 @check_if_ban
 def food(message):
     message_str = "تبادل کد فراموشی (آزمایشی)"
-    message_str += "\n مقررات: " +  "\n\n"
+    message_str += "\n مقررات: " + "\n\n"
     message_str += "در صورت دریافت  گزارش تخلف بن خواهید شد." + "\n\n"
     message_str += "فقط نام غذای خود را به اشتراک بگذارید کد را در بات ارسال نکنید" + "\n\n"
-    message_str += "در صورت گزارش دریافت چندین غذا در یک روز بن خواهید شد"+ "\n\n"
+    message_str += "در صورت گزارش دریافت چندین غذا در یک روز بن خواهید شد" + "\n\n"
     bot.send_message(message.chat.id, message_str, reply_markup=keyboards.foodKeyboard.get_markup())
 
 
