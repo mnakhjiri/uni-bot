@@ -133,7 +133,6 @@ class FoodCode(BaseModel):
     @database.atomic()
     def get_food_code(cls, to_user_chat_id, food_code_id):
         to_user = User.get(chat_id=to_user_chat_id)
-        print(food_code_id)
         from_user_chat_id = None
         if FoodCode.get_or_none(id=food_code_id).to_user is None:
             food_code = FoodCode.get(FoodCode.id == food_code_id)
@@ -141,8 +140,6 @@ class FoodCode(BaseModel):
             food_code.time_traded = datetime.utcnow()
             food_code.save()
             from_user_chat_id = FoodCode.get(id=food_code_id).from_user.chat_id
-            print(food_code_id)
-            print(from_user_chat_id)
         else:
             return False
         if FoodCode.get_or_none(id=food_code_id).to_user.chat_id == str(to_user_chat_id):
