@@ -132,8 +132,10 @@ class FoodCode(BaseModel):
         print(food_code_id)
         from_user_chat_id = None
         if FoodCode.get_or_none(id=food_code_id).to_user is None:
-            FoodCode.get(FoodCode.id == food_code_id).update(to_user=to_user,
-                                                    time_traded=datetime.utcnow()).execute()
+            food_code = FoodCode.get(FoodCode.id == food_code_id)
+            food_code.to_user = to_user
+            food_code.time_traded = datetime.utcnow()
+            food_code.save()
             from_user_chat_id = FoodCode.get(id=food_code_id).from_user.chat_id
             print(food_code_id)
             print(from_user_chat_id)
