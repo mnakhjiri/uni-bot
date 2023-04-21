@@ -146,8 +146,8 @@ def food(message):
 def send_foods(message):
     try:
         user_foods = list(
-            FoodCode.get_or_none().where(FoodCode.time_created > datetime.utcnow() - timedelta(days=1),
-                                         to_user=message.chat.id))
+            FoodCode.select().where(FoodCode.time_created > datetime.utcnow() - timedelta(days=1),
+                                    to_user=message.chat.id).execute())
     except AttributeError:
         bot.send_message(message.chat.id, "غذایی در لیست امروز ثبت نشده است.")
         return
