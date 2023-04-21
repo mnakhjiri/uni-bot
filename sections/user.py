@@ -159,13 +159,16 @@ def send_foods(message):
         FoodCode.select().where(FoodCode.time_created > (datetime.utcnow() - timedelta(days=1))).execute())
 
     if len(foods) == 0:
-        bot.send_message(message.chat.id, "غذایی در لیست امروز باقی نمانده است.")
+        bot.send_message(message.chat.id, "غذایی در لیست امروز اضافه نشده است.")
         return
+    sent = False
     for food_item in foods:
-        print(food_item.to_user)
-        bot.send_message(message.chat.id, f"{food_item.id} | {food_item.desc}",
-                         reply_markup=keyboards.getFoodKeyboard.get_markup())
-
+        if food_item.to_user is not None:
+            bot.send_message(message.chat.id, f"{food_item.id} | {food_item.desc}",
+                             reply_markup=keyboards.getFoodKeyboard.get_markup())
+            sent = True
+    if not sent:
+        bot.send_message(message.chat.id, "تمامی غذا ها تبادل شده اند")
 
 @bot.poll_answer_handler()
 # @save_action(action=UserActions.ANSWER_POLL)
