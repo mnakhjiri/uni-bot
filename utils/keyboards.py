@@ -82,6 +82,18 @@ class GetFoodKeyboard(BaseInlineKeyboard):
     @handle_db
     def do_action(self, action: str, message):
         if action == "getFood":
+            to_user = database.User.get(chat_id=message.chat.id)
+            user_foods = list(
+                database.FoodCode.select().where(
+                    database.FoodCode.time_created > datetime.utcnow() - timedelta(hours=6),
+                    database.FoodCode.to_user == to_user).execute())
+            if len(user_foods) > 3:
+                if str(message.chat.id) != str(settings.super_user):
+                    user = database.User.get(chat_id=message.chat.id)
+                    user.is_ban = True
+                    user.save()
+                    bot.send_message(message.chat.id, "به دلیل دریافت تعداد بیش از حد کد فراموشی حساب شما بن شد.")
+                    return
             if database.User.get(chat_id=message.chat.id).is_ban:
                 bot.send_message(message.chat.id, "حساب کاربری شما بن شده است.")
                 return
