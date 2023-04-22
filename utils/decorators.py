@@ -1,7 +1,6 @@
 from database import User, BotLog, database
 import settings
 from utils.enums import UserActions
-from utils.utils import executor
 
 
 def save_user_to_db(func):

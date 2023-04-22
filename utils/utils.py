@@ -7,8 +7,6 @@ from utils.enums import UserCustomConfigsEnum
 
 bot = settings.bot
 
-executor = ThreadPoolExecutor(5)
-
 
 @handle_db
 def get_csv(message, url, mode=None):
