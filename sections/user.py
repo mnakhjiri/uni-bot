@@ -96,8 +96,8 @@ def show_blacklist(message):
         bot.send_message(message.chat.id, out)
 
 
-@handle_db
 @bot.message_handler(commands=['hidden_words'])
+@handle_db
 @save_action(action=UserActions.SHOW_FILTERED_PANEL)
 def show_hidden_keyboard(message):
     bot.send_message(message.chat.id, "مدیریت عبارات فیلتر شده",
@@ -112,8 +112,8 @@ def reset_blacklist_v2(message):
     bot.send_message(message.chat.id, "تمامی عبارات از لیست پنهان حذف شدند.")
 
 
-@handle_db
 @bot.message_handler(commands=['cancel'])
+@handle_db
 @save_action(action=UserActions.CANCEL_SESSION)
 def cancel_session(message):
     session = Session.get_or_none(user=User.get(chat_id=message.chat.id))
@@ -124,9 +124,9 @@ def cancel_session(message):
         pass
 
 
+@bot.message_handler(commands=["filter_poll"])
 @handle_db
 @save_action(action=UserActions.SEND_POLL)
-@bot.message_handler(commands=["filter_poll"])
 def create_poll(message):
     bot.send_message(message.chat.id, "درس هایی که نمی خواهید در ددلاین ها برای شما نمایش داده شوند را انتخاب کنید")
     answer_options = settings.poll_answer_options[:]
@@ -149,8 +149,8 @@ def create_poll(message):
         bot.send_message(message.chat.id, answer)
 
 
-@handle_db
 @bot.message_handler(commands=["food"])
+@handle_db
 @save_action(action=UserActions.FOOD)
 @check_if_ban
 def food(message):
@@ -211,8 +211,8 @@ def handle_poll(poll):
     bot.send_message(poll.user.id, "فیلتر مورد نظر با موفقیت اعمال شد")
 
 
-@handle_db
 @bot.message_handler(commands=["show_alerts"])
+@handle_db
 @save_action(action=UserActions.SHOW_ALERTS)
 def show_alerts(message):
     user_config = UserCustomConfigs.get_or_none(user=User.get(chat_id=message.chat.id),

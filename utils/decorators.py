@@ -60,10 +60,8 @@ def save_action(action=None):
 def handle_db(func):
     def wrapper(*args, **kwargs):
         database.connect(reuse_if_open=True)
-        print("connected")
         result = func(*args, **kwargs)
         database.close()
-        print("closed")
         return result
 
     return wrapper
