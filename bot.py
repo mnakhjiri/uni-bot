@@ -9,6 +9,7 @@ bot = settings.bot
 
 
 @bot.message_handler()
+@handle_db
 @save_user_to_db
 def handling_message(message):
     user_session = Session.get_or_none(user=User.get(chat_id=message.chat.id))

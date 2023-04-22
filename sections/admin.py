@@ -2,10 +2,11 @@ from datetime import datetime
 from datetime import timedelta
 import settings
 from database import User, BlackListWord, BotLog, UserCustomConfigs
-from utils.decorators import save_user_to_db, admin, super_user
+from utils.decorators import save_user_to_db, admin, super_user, handle_db
 from utils import utils
 from utils import keyboards
 from utils.enums import *
+
 bot = settings.bot
 
 
@@ -24,6 +25,7 @@ def status(message):
 
 
 @bot.message_handler(commands=['users'])
+@handle_db
 @save_user_to_db
 @admin
 def get_users(message):
@@ -43,6 +45,7 @@ def get_users(message):
 
 
 @bot.message_handler(commands=['send_alert_test'])
+@handle_db
 @save_user_to_db
 @admin
 def send_alert_test(message):
@@ -56,6 +59,7 @@ def send_alert_test(message):
 
 
 @bot.message_handler(commands=['send_alert'])
+@handle_db
 @save_user_to_db
 @admin
 def send_alert(message):
@@ -68,6 +72,7 @@ def send_alert(message):
     utils.send_message_to_users(alert_str, users)
 
 
+@handle_db
 def send_alert_v2(message):
     alert_str = message.text
     users = User.get_users()
@@ -75,6 +80,7 @@ def send_alert_v2(message):
     utils.send_message_to_users(alert_str, users)
 
 
+@handle_db
 def send_alert_v2_test(message):
     alert_str = message.text
     users = [User.get(chat_id=message.chat.id)]
@@ -83,6 +89,7 @@ def send_alert_v2_test(message):
 
 
 @bot.message_handler(commands=['admin'])
+@handle_db
 @save_user_to_db
 @admin
 def admin_handler(message):
@@ -90,6 +97,7 @@ def admin_handler(message):
 
 
 @bot.message_handler(commands=['su', 'sudo'])
+@handle_db
 @super_user
 def super_user_handler(message):
     result = ""
@@ -114,6 +122,7 @@ def super_user_handler(message):
 
 
 @bot.message_handler(commands=['unban'])
+@handle_db
 @super_user
 def un_ban(message):
     chat_id = message.text.replace("/unban", "").strip()
@@ -128,6 +137,7 @@ def un_ban(message):
 
 
 @bot.message_handler(commands=['ban'])
+@handle_db
 @super_user
 def ban(message):
     chat_id = message.text.replace("/ban", "").strip()

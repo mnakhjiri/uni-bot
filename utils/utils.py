@@ -2,6 +2,7 @@ import pandas as pd
 from concurrent.futures import ThreadPoolExecutor
 import settings
 from database import BlackListWord, User, UserCustomConfigs
+from utils.decorators import handle_db
 from utils.enums import UserCustomConfigsEnum
 
 bot = settings.bot
@@ -9,6 +10,7 @@ bot = settings.bot
 executor = ThreadPoolExecutor(5)
 
 
+@handle_db
 def get_csv(message, url, mode=None):
     from utils.keyboards import homeworkKeyboard
     result = ""
@@ -46,6 +48,7 @@ def get_csv(message, url, mode=None):
         bot.send_message(message.chat.id, result)
 
 
+@handle_db
 def send_message_to_users(text, users):
     from utils.keyboards import dontShowAlertsKeyboard
     for user in users:

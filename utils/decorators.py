@@ -1,4 +1,4 @@
-from database import User, BotLog
+from database import User, BotLog, database
 import settings
 from utils.enums import UserActions
 from utils.utils import executor
@@ -56,3 +56,13 @@ def save_action(action=None):
         return wrapper
 
     return wrapper_function
+
+
+def handle_db(func):
+    def wrapper(*args, **kwargs):
+        database.connect(reuse_if_open=True)
+        result = func(*args, **kwargs)
+        database.close()
+        return result
+
+    return wrapper

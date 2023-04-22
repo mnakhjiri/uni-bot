@@ -11,6 +11,7 @@ bot = settings.bot
 
 
 @bot.message_handler(commands=['start'])
+@handle_db
 @save_user_to_db
 @save_action(action=UserActions.START_BOT)
 def greet(message):
@@ -18,6 +19,7 @@ def greet(message):
 
 
 @bot.message_handler(commands=['homeworks'])
+@handle_db
 @save_user_to_db
 @save_action(action=UserActions.SEND_HW)
 def homework(message):
@@ -25,6 +27,7 @@ def homework(message):
 
 
 @bot.message_handler(commands=['exams'])
+@handle_db
 @save_user_to_db
 @save_action(action=UserActions.SEND_EXAMS)
 def exams(message):
@@ -32,6 +35,7 @@ def exams(message):
 
 
 @bot.message_handler(commands=['id'])
+@handle_db
 @save_user_to_db
 @save_action(action=UserActions.SEND_ID)
 def get_id(message):
@@ -39,6 +43,7 @@ def get_id(message):
 
 
 @bot.message_handler(commands=['feedback'])
+@handle_db
 @save_user_to_db
 @save_action(action=UserActions.SEND_FEEDBACK)
 def send_feedback(message):
@@ -52,12 +57,14 @@ def send_feedback(message):
 
 
 @bot.message_handler(commands=['sheet'])
+@handle_db
 @save_user_to_db
 @save_action(action=UserActions.SEND_SHEET)
 def send_sheet(message):
     bot.send_message(message.chat.id, settings.sheet_url)
 
 
+@handle_db
 @save_user_to_db
 @save_action(action=UserActions.DONT_SHOW)
 def dont_show_word_v2(message):
@@ -66,6 +73,7 @@ def dont_show_word_v2(message):
     bot.send_message(message.chat.id, "عبارت مورد نظر از این به بعد نمایش داده نمی شود.")
 
 
+@handle_db
 @save_user_to_db
 @save_action(action=UserActions.SHOW_WORD)
 def show_word_v2(message):
@@ -74,6 +82,7 @@ def show_word_v2(message):
     bot.send_message(message.chat.id, "عبارت مورد نظر از این به بعد نمایش داده می شود.")
 
 
+@handle_db
 @save_user_to_db
 @save_action(action=UserActions.SEND_FILTERED_WORDS)
 def show_blacklist(message):
@@ -87,6 +96,7 @@ def show_blacklist(message):
         bot.send_message(message.chat.id, out)
 
 
+@handle_db
 @bot.message_handler(commands=['hidden_words'])
 @save_action(action=UserActions.SHOW_FILTERED_PANEL)
 def show_hidden_keyboard(message):
@@ -94,6 +104,7 @@ def show_hidden_keyboard(message):
                      reply_markup=keyboards.user_keyboard_hidden_words.get_markup())
 
 
+@handle_db
 @save_user_to_db
 @save_action(action=UserActions.RESET_BLACKLIST)
 def reset_blacklist_v2(message):
@@ -101,6 +112,7 @@ def reset_blacklist_v2(message):
     bot.send_message(message.chat.id, "تمامی عبارات از لیست پنهان حذف شدند.")
 
 
+@handle_db
 @bot.message_handler(commands=['cancel'])
 @save_action(action=UserActions.CANCEL_SESSION)
 def cancel_session(message):
@@ -112,6 +124,7 @@ def cancel_session(message):
         pass
 
 
+@handle_db
 @save_action(action=UserActions.SEND_POLL)
 @bot.message_handler(commands=["filter_poll"])
 def create_poll(message):
@@ -136,6 +149,7 @@ def create_poll(message):
         bot.send_message(message.chat.id, answer)
 
 
+@handle_db
 @bot.message_handler(commands=["food"])
 @save_action(action=UserActions.FOOD)
 @check_if_ban
@@ -148,6 +162,7 @@ def food(message):
     bot.send_message(message.chat.id, message_str, reply_markup=keyboards.foodKeyboard.get_markup())
 
 
+@handle_db
 @check_if_ban
 def send_foods(message):
     try:
@@ -181,6 +196,7 @@ def send_foods(message):
         bot.send_message(message.chat.id, "تمامی غذا ها تبادل شده اند")
 
 
+@handle_db
 @bot.poll_answer_handler()
 # @save_action(action=UserActions.ANSWER_POLL)
 def handle_poll(poll):
@@ -195,6 +211,7 @@ def handle_poll(poll):
     bot.send_message(poll.user.id, "فیلتر مورد نظر با موفقیت اعمال شد")
 
 
+@handle_db
 @bot.message_handler(commands=["show_alerts"])
 @save_action(action=UserActions.SHOW_ALERTS)
 def show_alerts(message):

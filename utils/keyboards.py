@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 import telebot
 
 import sections.user
+from utils.decorators import handle_db
 from utils.enums import AdminSessionStates, UserSessionStates, UserCustomConfigsEnum
 import database
 import settings
@@ -34,6 +35,7 @@ class BaseInlineKeyboard:
 
 
 class AdminKeyboard(BaseInlineKeyboard):
+    @handle_db
     def do_action(self, action: str, message):
         if action == "status":
             admin.status(message)
@@ -49,6 +51,8 @@ class AdminKeyboard(BaseInlineKeyboard):
 
 
 class UserKeyboardHiddenWords(BaseInlineKeyboard):
+
+    @handle_db
     def do_action(self, action: str, message):
         if action == "view":
             sections.user.show_blacklist(message)
@@ -65,6 +69,8 @@ class UserKeyboardHiddenWords(BaseInlineKeyboard):
 
 
 class HomeworkKeyboard(BaseInlineKeyboard):
+
+    @handle_db
     def do_action(self, action: str, message):
         if action == "done":
             database.BlackListWord.add_to_black_list(message.text.split("|")[0].strip(), message.chat.id)
@@ -72,6 +78,8 @@ class HomeworkKeyboard(BaseInlineKeyboard):
 
 
 class GetFoodKeyboard(BaseInlineKeyboard):
+
+    @handle_db
     def do_action(self, action: str, message):
         if action == "getFood":
             if database.User.get(chat_id=message.chat.id).is_ban:
@@ -103,6 +111,8 @@ class GetFoodKeyboard(BaseInlineKeyboard):
 
 
 class FoodKeyboard(BaseInlineKeyboard):
+
+    @handle_db
     def do_action(self, action: str, message):
         if action == "sendFoods":
             sections.user.send_foods(message)
@@ -121,6 +131,8 @@ class FoodKeyboard(BaseInlineKeyboard):
 
 
 class VerifyNotUserNameKeyboard(BaseInlineKeyboard):
+
+    @handle_db
     def do_action(self, action: str, message):
         if action == "verify":
             bot.send_message(message.chat.id,
@@ -132,6 +144,8 @@ class VerifyNotUserNameKeyboard(BaseInlineKeyboard):
 
 
 class DontShowAlertsKeyboard(BaseInlineKeyboard):
+
+    @handle_db
     def do_action(self, action: str, message):
         if action == "hideAlerts":
             user = database.User.get(chat_id=message.chat.id)
