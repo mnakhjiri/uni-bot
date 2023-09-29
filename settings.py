@@ -17,8 +17,7 @@ hw_gid = "0"
 sheet_url = f"https://docs.google.com/spreadsheets/d/{sheet_id}"
 exam_url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv&gid={exams_gid}"
 hw_url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv&gid={hw_gid}"
-poll_answer_options = ["نظریه گراف", "مدار الک", "معماری", "دی اس", "سیستم عامل", "هوش عبدوس", "هوش سلیمی", "سیگنال",
-                       "مدار مجتمع", "جبر خطی", "آمار و احتمال"]
+poll_answer_options = ["آمار و احتمال", "مدار مجتمع", "پایگاه داده", "تحلیل و طراحی سیستم ها", "کامپایلر", "هوش", "سیستم عامل", "روش پژوهش", "الگوریتم", "شبکه"]
 db_user = config['database']["db_user"]
 db_pass = config["database"]["db_pass"]
 db_host = config["database"]["db_host"]
